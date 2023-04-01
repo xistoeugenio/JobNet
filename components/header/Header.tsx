@@ -1,20 +1,21 @@
 import React from "react";
+import AvatarName from "../AvatarName";
 
-export default function Header() {
+const Header = () => {
   return (
     <div
       className=" 
-    bg-stone-500 h-11
+    bg-stone-500 h-14
     flex justify-between items-center
     box-border px-5
     "
     >
-      <div className="">
-        user info{/* replace to a avatar and the userName */}
-      </div>
+      <AvatarName />
       <button className="">
         add {/*add the functionality to add a new job applied */}
       </button>
     </div>
   );
-}
+};
+;
+export default Header;
