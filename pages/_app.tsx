@@ -9,7 +9,7 @@ const roboto = Roboto({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className={roboto.className}>
+    <div className="h-screen flex items-center justify-center">
       <Component {...pageProps} />
     </div>
   );

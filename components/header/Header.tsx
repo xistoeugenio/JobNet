@@ -5,17 +5,17 @@ const Header = () => {
   return (
     <div
       className=" 
-    bg-stone-500 h-14
+    h-14
     flex justify-between items-center
-    box-border px-5
+    box-border px-5 
+    border-b-2 border-gray-500
     "
     >
       <AvatarName />
-      <button className="">
+      <button className=" bg-cyan-600 px-3 py-1 rounded-md">
         add {/*add the functionality to add a new job applied */}
       </button>
     </div>
   );
 };
-;
 export default Header;

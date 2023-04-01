@@ -3,8 +3,10 @@
 .homeContainer {
   //background-color: dodgerblue; 
   width: 768px;
-  max-width: 98vw;
-  height: 98vh;
-  border: 1px solid white;
+  max-width: 96vw;
+  height: 90vh;
+  border: 1.5px solid gray;
   border-radius: 5px;
+  display: flex;
+  flex-direction: column;
 }

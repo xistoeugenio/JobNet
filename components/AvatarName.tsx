@@ -2,9 +2,9 @@ import Avatar from "./Avatar";
 
 const AvatarName = () => {
   return (
-    <div className="flex items-center  gap-4 box-border px-2 py-1">
+    <div className="flex items-center  gap-3 box-border">
       <Avatar />
-      <span>Xisto Eugenio</span>
+      <span className=" text-yellow-100">Xisto Eugenio</span>
     </div>
   );
 };
