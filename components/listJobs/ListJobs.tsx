@@ -1,7 +1,12 @@
+import JobPreview from "../JobPreview";
+import { jobs_applied } from "./dummyList";
+
 const ListJobs = () => {
   return (
-    <div className=" bg-lime-600 flex-1">
-      List Jobs
+    <div className=" bg-neutral-950 flex-1 rounded-b-md">
+      {jobs_applied.map((job, index) => (
+        <JobPreview key={index} name={job.Title} />
+      ))}
     </div>
   );
 };
