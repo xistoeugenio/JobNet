@@ -3,6 +3,7 @@ interface InputsProps {
   value?: string;
   type?: string;
   disabled?: boolean;
+  small?: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -11,6 +12,7 @@ const Input: React.FC<InputsProps> = ({
   value,
   type,
   disabled,
+  small,
   onChange,
 }) => {
   return (
@@ -20,9 +22,8 @@ const Input: React.FC<InputsProps> = ({
       value={value}
       placeholder={placeholder}
       type={type}
-      className="
+      className={`
           w-full
-          p-4 
           text-lg 
           bg-black 
           border-2
@@ -36,7 +37,10 @@ const Input: React.FC<InputsProps> = ({
           disabled:bg-neutral-900
           disabled:opacity-70
           disabled:cursor-not-allowed
-        "
+          ${small ? "px-4 py-3" : "p-4"}
+        `}
     />
   );
 };
+
+export default Input;

@@ -52,7 +52,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, body, a
           bg-opacity-70
         "
       >
-        <div className="relative w-full lg:w-3/6 my-6 mx-auto lg:max-w-3xl h-full lg:h-auto">
+        <div className="relative w-full lg:w-3/6 mx-auto lg:max-w-3xl h-full lg:h-auto">
           {/*content*/}
           <div className="
             h-full
@@ -96,7 +96,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onSubmit, title, body, a
               </button>
             </div>
             {/*body*/}
-            <div className="relative p-10 flex-auto">
+            <div className="relative px-10 py-2 flex-auto">
               {body}
             </div>
             {/*footer*/}
