@@ -13,9 +13,7 @@ const Header = () => {
     "
     >
       <AvatarName />
-      <button className=" bg-cyan-600 px-3 py-1 rounded-md">
-        add {/*add the functionality to add a new job applied */}
-      </button>
+      <Button label="Add" outline/>
     </div>
   );
 };
