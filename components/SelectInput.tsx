@@ -2,15 +2,19 @@ interface SelectInputProps {
   small?: boolean;
   x_small?: boolean;
   options?: string[];
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const SelectInput: React.FC<SelectInputProps> = ({
   small,
   x_small,
   options,
+  onChange,
 }) => {
   return (
     <select
+      onChange={onChange}
+      
       name=""
       id=""
       className={`
@@ -35,7 +39,9 @@ const SelectInput: React.FC<SelectInputProps> = ({
   `}
     >
       {options?.map((option, index) => (
-        <option key={index}>{option}</option>
+        <option key={index} value={option}>
+          {option}
+        </option>
       ))}
     </select>
   );

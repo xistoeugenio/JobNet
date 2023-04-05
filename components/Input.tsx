@@ -3,6 +3,7 @@ interface InputsProps {
   value?: string;
   type?: string;
   disabled?: boolean;
+  required?: boolean;
   small?: boolean;
   x_small?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -13,6 +14,7 @@ const Input: React.FC<InputsProps> = ({
   value,
   type,
   disabled,
+  required,
   small,
   x_small,
   onChange,
@@ -24,6 +26,7 @@ const Input: React.FC<InputsProps> = ({
       value={value}
       placeholder={placeholder}
       type={type}
+      required={required}
       className={`
           w-full
           placeholder-neutral-600

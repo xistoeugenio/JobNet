@@ -4,23 +4,26 @@ interface ButtonProps {
   fullWidth?: boolean;
   large?: boolean;
   onClick?: () => void;
+  submit: boolean;
   disabled?: boolean;
   outline?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({ 
-  label, 
-  secondary, 
-  fullWidth, 
-  onClick, 
-  large, 
-  disabled, 
-  outline 
+const Button: React.FC<ButtonProps> = ({
+  label,
+  secondary,
+  fullWidth,
+  onClick,
+  submit,
+  large,
+  disabled,
+  outline,
 }) => {
-  return ( 
+  return (
     <button
       disabled={disabled}
       onClick={onClick}
+      type={submit ? "submit" : "button"}
       className={`
         disabled:opacity-70
         disabled:cursor-not-allowed
@@ -29,21 +32,21 @@ const Button: React.FC<ButtonProps> = ({
         hover:opacity-80
         transition
         border-2
-        ${fullWidth ? 'w-full' : 'w-fit'}
-        ${secondary ? 'bg-white' : 'bg-sky-500'}
-        ${secondary ? 'text-black' : 'text-white'}
-        ${secondary ? 'border-black' : 'border-sky-500'}
-        ${large ? 'text-xl' : 'text-md'}
-        ${large ? 'px-5' : 'px-4'}
-        ${large ? 'py-3' : 'py-2'}
-        ${outline ? 'bg-transparent' : ''}
-        ${outline ? 'border-white' : ''}
-        ${outline ? 'text-white' : ''}
+        ${fullWidth ? "w-full" : "w-fit"}
+        ${secondary ? "bg-white" : "bg-sky-500"}
+        ${secondary ? "text-black" : "text-white"}
+        ${secondary ? "border-black" : "border-sky-500"}
+        ${large ? "text-xl" : "text-md"}
+        ${large ? "px-5" : "px-4"}
+        ${large ? "py-3" : "py-2"}
+        ${outline ? "bg-transparent" : ""}
+        ${outline ? "border-white" : ""}
+        ${outline ? "text-white" : ""}
       `}
     >
       {label}
     </button>
-   );
-}
- 
+  );
+};
+
 export default Button;

@@ -3,27 +3,51 @@ import style from "../components/add/add.module.scss";
 import TextArea from "@/components/add/TextArea";
 import Button from "@/components/Button";
 import SelectInput from "../components/SelectInput";
+import { useState } from "react";
 
 const Add = () => {
-  const workType = ["Remote", "In person", "Flexible"];
-  const status = ["Applied","Interviewing", "Offered", "Accepted", "Rejected", "Withdrawn"]
+  const workModeOptions = ["Remote", "In-person", "Hybrid", "Flexible"];
+  const currentStatusOptions = [
+    "Applied",
+    "Interviewing",
+    "Offered",
+    "Accepted",
+    "Rejected",
+    "Withdrawn",
+  ];
+
+  const [currentStatus, setCurrentStatus] = useState(currentStatusOptions[0]);
+  const [workMode, setWorkMode] = useState(workModeOptions[0]);
   return (
     <div className={style.addContainer}>
-      <div className={style.second}>
+      <form
+        className={style.second}
+        onSubmit={() => {
+          console.log("form submit worked");
+        }}
+      >
         <div className=" flex flex-1 flex-col items-center justify-around box-border p-2">
-          <Input x_small placeholder="Title" />
-          <Input x_small placeholder="Company" />
-          <Input x_small placeholder="Location(optional)" />
-          <SelectInput x_small options={workType} />
-          <Input x_small placeholder="Offer sallary" />
-          <SelectInput x_small options={status}/>
-          <Input x_small placeholder="Job Url" />
-          <Button label="Save" outline />
+          <Input x_small placeholder="Title" required />
+          <Input x_small placeholder="Company" required />
+          <Input x_small placeholder="Location (optional)" />
+          <SelectInput
+            x_small
+            options={workModeOptions}
+            onChange={(e) => setWorkMode(e.target.value)}
+          />
+          <Input x_small placeholder="Offer sallary (optional)" />
+          <SelectInput
+            x_small
+            options={currentStatusOptions}
+            onChange={(e) => setCurrentStatus(e.target.value)}
+          />
+          <Input x_small placeholder="Job Url (optional)" />
+          <Button label="Save" outline submit />
         </div>
         <div className=" flex-1 box-border p-3">
           <TextArea placeholder="Add the full job description here (optional)" />
         </div>
-      </div>
+      </form>
     </div>
   );
 };
