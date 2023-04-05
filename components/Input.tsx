@@ -4,7 +4,8 @@ interface InputsProps {
   type?: string;
   disabled?: boolean;
   small?: boolean;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  x_small?: boolean;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input: React.FC<InputsProps> = ({
@@ -13,6 +14,7 @@ const Input: React.FC<InputsProps> = ({
   type,
   disabled,
   small,
+  x_small,
   onChange,
 }) => {
   return (
@@ -24,6 +26,7 @@ const Input: React.FC<InputsProps> = ({
       type={type}
       className={`
           w-full
+          placeholder-neutral-600
           text-lg 
           bg-black 
           border-2
@@ -38,6 +41,7 @@ const Input: React.FC<InputsProps> = ({
           disabled:opacity-70
           disabled:cursor-not-allowed
           ${small ? "px-4 py-3" : "p-4"}
+          ${x_small && "p-2 text-base w-5/6"}
         `}
     />
   );
