@@ -3,6 +3,8 @@ import RegisterModal from "@/components/modals/RegisterModal";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Roboto } from "next/font/google";
+import { Toaster } from "react-hot-toast";
+import { SessionProvider } from "next-auth/react";
 
 const roboto = Roboto({
   weight: "500",
@@ -11,10 +13,13 @@ const roboto = Roboto({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className="h-screen flex items-center justify-center">
-      <LoginModal/>
-      <RegisterModal />
-      <Component {...pageProps} />
-    </div>
+    <SessionProvider session={pageProps.session}>
+      <Toaster />
+      <div className="h-screen flex items-center justify-center">
+        <LoginModal />
+        <RegisterModal />
+        <Component {...pageProps} />
+      </div>
+    </SessionProvider>
   );
 }
