@@ -1,3 +1,5 @@
+import {z} from "zod"
+
 export const jobFormData = [
   {
     id: 1,
@@ -48,3 +50,14 @@ export const jobFormData = [
   },
 
 ]
+
+  export const createJobSchema = z.object({
+  title: z.string().nonempty({
+    message: 'The title is required',
+  }),
+  companyName: z.string().nonempty({
+    message: 'The company name is required',
+  }),
+  offerSallary: z.string(),
+  jobUrl: z.string(),
+})

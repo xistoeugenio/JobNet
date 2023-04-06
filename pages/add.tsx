@@ -4,49 +4,47 @@ import TextArea from "@/components/add/TextArea";
 import Button from "@/components/Button";
 import SelectInput from "../components/inputs/SelectInput";
 import { useState } from "react";
+import InputValidation from "@/components/add/inputValidation";
+import { FormProvider, useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createJobSchema } from "@/components/add/JobFormData";
+
+type createJobDatatype = z.infer<typeof createJobSchema>;
 
 const Add = () => {
-  const workModeOptions = ["Remote", "In-person", "Hybrid", "Flexible"];
-  const currentStatusOptions = [
-    "Applied",
-    "Interviewing",
-    "Offered",
-    "Accepted",
-    "Rejected",
-    "Withdrawn",
-  ];
+  const createJobForm = useForm<createJobDatatype>({
+    resolver: zodResolver(createJobSchema),
+  });
+  const { handleSubmit } = createJobForm;
 
-  const [currentStatus, setCurrentStatus] = useState(currentStatusOptions[0]);
-  const [workMode, setWorkMode] = useState(workModeOptions[0]);
+  function subTest(data: createJobDatatype) {
+    console.log(data);
+  }
   return (
     <div className={style.addContainer}>
-      <form
-        className={style.second}
-        onSubmit={() => {
-          console.log("form submit worked");
-        }}
-      >
-        <div className=" flex flex-1 flex-col items-center justify-around box-border p-2">
-          <Input x_small placeholder="Title"/>
-          <Input x_small placeholder="Company"/>
-          <SelectInput
-            x_small
-            options={workModeOptions}
-            onChange={(e) => setWorkMode(e.target.value)}
-          />
-          <Input x_small placeholder="Offer sallary (optional)" />
-          <SelectInput
-            x_small
-            options={currentStatusOptions}
-            onChange={(e) => setCurrentStatus(e.target.value)}
-          />
-          <Input x_small placeholder="Job Url (optional)" />
-          <Button label="Save" outline submit />
-        </div>
-        <div className=" flex-1 box-border p-3">
-          <TextArea placeholder="Add the full job description here (optional)" />
-        </div>
-      </form>
+      <FormProvider {...createJobForm}>
+        <form className={style.second} onSubmit={handleSubmit(subTest)}>
+          <div className=" flex flex-1 flex-col items-center justify-around box-border p-2">
+            <InputValidation name="title" placeholder="Title" xsmall />
+            <InputValidation name="companyName" placeholder="Company" xsmall />
+            <InputValidation
+              name="offerSallary"
+              placeholder="Offer sallary (optional)"
+              xsmall
+            />
+            <InputValidation
+              name="jobUrl"
+              placeholder="Job Url (optional)"
+              xsmall
+            />
+            <Button label="Save" outline submit />
+          </div>
+          <div className=" flex-1 box-border p-3">
+            <TextArea placeholder="Add the full job description here (optional)" />
+          </div>
+        </form>
+      </FormProvider>
     </div>
   );
 };
