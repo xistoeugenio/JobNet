@@ -4,10 +4,17 @@ import Button from "../Button";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { signOut } from "next-auth/react";
 import useLoginModal from "@/hooks/useLoginModal";
+import { useRouter } from "next/router";
+import { useCallback } from "react";
 
 const Header = () => {
   const { data: currentUser } = useCurrentUser();
   const loginModal = useLoginModal();
+  const router = useRouter();
+
+  const goToAddPage = useCallback(() => {
+      router.push("/add")
+  }, [router]);
 
   return (
     <div
@@ -20,10 +27,10 @@ const Header = () => {
     >
       {currentUser ? (
         <>
-          <AvatarName username={currentUser?.username}/>
+          <AvatarName username={currentUser?.username} />
           <div className="flex gap-3">
             <Button label="Sign out" secondary onClick={signOut} />
-            <Button label="Add" outline />
+            <Button label="Add" outline onClick={goToAddPage}/>
           </div>
         </>
       ) : (

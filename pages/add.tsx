@@ -1,8 +1,8 @@
-import Input from "@/components/Input";
+import Input from "@/components/inputs/Input";
 import style from "../components/add/add.module.scss";
 import TextArea from "@/components/add/TextArea";
 import Button from "@/components/Button";
-import SelectInput from "../components/SelectInput";
+import SelectInput from "../components/inputs/SelectInput";
 import { useState } from "react";
 
 const Add = () => {
@@ -27,9 +27,8 @@ const Add = () => {
         }}
       >
         <div className=" flex flex-1 flex-col items-center justify-around box-border p-2">
-          <Input x_small placeholder="Title" required />
-          <Input x_small placeholder="Company" required />
-          <Input x_small placeholder="Location (optional)" />
+          <Input x_small placeholder="Title"/>
+          <Input x_small placeholder="Company"/>
           <SelectInput
             x_small
             options={workModeOptions}

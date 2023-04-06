@@ -28,9 +28,10 @@ const Input: React.FC<InputsProps> = ({
       type={type}
       required={required}
       className={`
-          w-full
+      ${x_small! && small! && "w-full text-lg p-4"}
+      ${small && "px-4 py-3 w-full text-lg"}
+      ${x_small && "p-2 text-base w-5/6"}
           placeholder-neutral-600
-          text-lg 
           bg-black 
           border-2
           border-neutral-800 
@@ -43,8 +44,6 @@ const Input: React.FC<InputsProps> = ({
           disabled:bg-neutral-900
           disabled:opacity-70
           disabled:cursor-not-allowed
-          ${small ? "px-4 py-3" : "p-4"}
-          ${x_small && "p-2 text-base w-5/6"}
         `}
     />
   );
