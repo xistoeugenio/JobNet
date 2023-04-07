@@ -1,36 +1,26 @@
-interface InputsProps {
-  placeholder?: string;
-  value?: string;
-  type?: string;
-  disabled?: boolean;
-  required?: boolean;
+import { InputHTMLAttributes } from "react";
+import { useFormContext } from "react-hook-form";
+
+interface InputsProps extends InputHTMLAttributes<HTMLInputElement> {
+  name: string;
   small?: boolean;
-  x_small?: boolean;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  xsmall?: boolean;
 }
 
 const Input: React.FC<InputsProps> = ({
-  placeholder,
-  value,
-  type,
-  disabled,
-  required,
   small,
-  x_small,
-  onChange,
+  xsmall,
+  name,
+  ...inputAtributes
 }) => {
+  const {register} = useFormContext()
   return (
     <input
-      disabled={disabled}
-      onChange={onChange}
-      value={value}
-      placeholder={placeholder}
-      type={type}
-      required={required}
+    id={name}
       className={`
-      ${x_small! && small! && "w-full text-lg p-4"}
+      ${xsmall! && small! && "w-full text-lg p-4"}
       ${small && "px-4 py-3 w-full text-lg"}
-      ${x_small && "p-2 text-base w-5/6"}
+      ${xsmall && "p-2 text-base w-5/6"}
           placeholder-neutral-600
           bg-black 
           border-2
@@ -45,6 +35,8 @@ const Input: React.FC<InputsProps> = ({
           disabled:opacity-70
           disabled:cursor-not-allowed
         `}
+        {...register(name)}
+        {...inputAtributes}
     />
   );
 };

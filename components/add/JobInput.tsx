@@ -1,6 +1,6 @@
+import Input from "../inputs/Input";
 import SelectInput from "../inputs/SelectInput";
 import { ErrorMessage } from "./ErrorMessage";
-import InputValidation from "./inputValidation";
 import { InputHTMLAttributes } from "react";
 
 interface jobInputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -15,7 +15,7 @@ const JobInput = ({ name, withOptions, options, ...props }: jobInputProps) => {
   } else {
     return (
       <div className="w-full flex flex-col items-center">
-        <InputValidation name={name} xsmall {...props} />
+        <Input name={name} xsmall {...props} />
         <ErrorMessage field={name} />
       </div>
     );

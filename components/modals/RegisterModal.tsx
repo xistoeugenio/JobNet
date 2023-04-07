@@ -6,17 +6,19 @@ import Input from "../inputs/Input";
 import Modal from "../Modal";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import useLoginModal from "@/hooks/useLoginModal";
+import { z } from "zod";
+import { useForm, FormProvider } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const RegisterModal = () => {
+  //MODALS HOOKS
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
 
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  //LOADING
   const [isloading, setIsLoading] = useState(false);
 
+  //Toggle the modals
   const onToggle = useCallback(() => {
     if (isloading) {
       return;
@@ -25,23 +27,42 @@ const RegisterModal = () => {
     loginModal.onOpen();
   }, [isloading, registerModal, loginModal]);
 
-  const onSubmit = useCallback(async () => {
+  //register schema
+  const registerSchema = z.object({
+    email: z.string().nonempty({
+      message: "The email is required",
+    }),
+    name: z.string().nonempty({
+      message: "The name is required",
+    }),
+    username: z.string().nonempty({
+      message: "The username is required",
+    }),
+    password: z.string().nonempty({
+      message: "The password is required",
+    }),
+  });
+
+  //register schema type
+  type registerDatatype = z.infer<typeof registerSchema>;
+
+  //register form
+  const registerForm = useForm<registerDatatype>({
+    resolver: zodResolver(registerSchema),
+  });
+  const { handleSubmit } = registerForm;
+
+  //register function
+  const register = async (data: registerDatatype) => {
     try {
       setIsLoading(true);
 
-      await axios.post("/api/register", {
-        email,
-        password,
-        username,
-        name,
-      });
+      await axios.post("/api/register", data);
 
       toast.success("Acount has been created");
 
-      await signIn('credentials',{
-        email,
-        password
-      })
+      const { email, password } = data;
+      await signIn("credentials", { email, password });
 
       registerModal.onClose();
     } catch (error) {
@@ -50,46 +71,25 @@ const RegisterModal = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [registerModal, email, password, username, name]);
+  };
 
   const bodyContent = (
     <div className="flex flex-col gap-4 ">
+      <Input name="email" placeholder="Email" disabled={isloading} small />
+      <Input name="name" placeholder="Name" disabled={isloading} small />
       <Input
-        placeholder="Email"
-        onChange={(e) => setEmail(e.target.value)}
-        value={email}
-        disabled={isloading}
-        small
-      />
-      <Input
-        placeholder="Name"
-        onChange={(e) => setName(e.target.value)}
-        value={name}
-        disabled={isloading}
-        small
-      />
-      <Input
+        name="username"
         placeholder="UserName"
-        onChange={(e) => setUsername(e.target.value)}
-        value={username}
         disabled={isloading}
         small
       />
       <Input
+        name="password"
         placeholder="Password"
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
         disabled={isloading}
         small
       />
       {/*Change this to a truly password verification */}
-      <Input
-        placeholder="Confirm Password"
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-        disabled={isloading}
-        small
-      />
     </div>
   );
 
@@ -109,16 +109,18 @@ const RegisterModal = () => {
   );
 
   return (
-    <Modal
-      disabled={isloading}
-      isOpen={registerModal.isOpen}
-      title="Create an account"
-      actionLabel="Sign in"
-      onClose={registerModal.onClose}
-      onSubmit={onSubmit}
-      body={bodyContent}
-      footer={footerContent}
-    />
+    <FormProvider {...registerForm}>
+      <Modal
+        disabled={isloading}
+        isOpen={registerModal.isOpen}
+        title="Create an account"
+        actionLabel="Sign in"
+        onClose={registerModal.onClose}
+        onSubmit={handleSubmit(register)}
+        body={bodyContent}
+        footer={footerContent}
+      />
+    </FormProvider>
   );
 };
 

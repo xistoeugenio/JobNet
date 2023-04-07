@@ -1,10 +1,6 @@
-import Input from "@/components/inputs/Input";
 import style from "../components/add/add.module.scss";
 import TextArea from "@/components/add/TextArea";
 import Button from "@/components/Button";
-import SelectInput from "../components/inputs/SelectInput";
-import { useState } from "react";
-import InputValidation from "@/components/add/inputValidation";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,7 +22,7 @@ const Add = () => {
   return (
     <div className={style.addContainer}>
       <FormProvider {...createJobForm}>
-        <form className={style.second} onSubmit={handleSubmit(subTest)}>
+        <form onSubmit={handleSubmit(subTest)}>
           <div className=" flex flex-1 flex-col items-center justify-around box-border p-2">
             {jobFormData.map((job, index) => (
               <JobInput
