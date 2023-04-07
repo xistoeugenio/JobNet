@@ -8,7 +8,8 @@ import InputValidation from "@/components/add/inputValidation";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createJobSchema } from "@/components/add/JobFormData";
+import { createJobSchema, jobFormData } from "@/components/add/JobFormData";
+import JobInput from "@/components/add/JobInput";
 
 type createJobDatatype = z.infer<typeof createJobSchema>;
 
@@ -19,6 +20,7 @@ const Add = () => {
   const { handleSubmit } = createJobForm;
 
   function subTest(data: createJobDatatype) {
+    //TODO the send data function
     console.log(data);
   }
   return (
@@ -26,22 +28,22 @@ const Add = () => {
       <FormProvider {...createJobForm}>
         <form className={style.second} onSubmit={handleSubmit(subTest)}>
           <div className=" flex flex-1 flex-col items-center justify-around box-border p-2">
-            <InputValidation name="title" placeholder="Title" xsmall />
-            <InputValidation name="companyName" placeholder="Company" xsmall />
-            <InputValidation
-              name="offerSallary"
-              placeholder="Offer sallary (optional)"
-              xsmall
-            />
-            <InputValidation
-              name="jobUrl"
-              placeholder="Job Url (optional)"
-              xsmall
-            />
-            <Button label="Save" outline submit />
+            {jobFormData.map((job, index) => (
+              <JobInput
+                name={job.name}
+                key={index}
+                placeholder={job.name}
+                withOptions={job.withOptions}
+                options={job.options}
+              />
+            ))}
+            <Button label="Add" outline submit />
           </div>
           <div className=" flex-1 box-border p-3">
-            <TextArea placeholder="Add the full job description here (optional)" />
+            <TextArea
+              name="jobDescription"
+              placeholder="Add your full job description here (optional)"
+            />
           </div>
         </form>
       </FormProvider>

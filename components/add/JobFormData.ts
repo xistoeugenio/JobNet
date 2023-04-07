@@ -3,14 +3,14 @@ import {z} from "zod"
 export const jobFormData = [
   {
     id: 1,
-    name: 'Title',
+    name: 'title',
     required: true,
     placeholder: 'Title',
     withOptions: false,
   },
   {
     id: 2,
-    name: 'Company',
+    name: 'companyName',
     required: true,
     placeholder: 'Company name',
     withOptions: false,
@@ -23,7 +23,7 @@ export const jobFormData = [
   },
   {
     id: 5,
-    name: 'OfferSallary',
+    name: 'offerSallary',
     required: false,
     placeholder: 'Offer sallary (optional)',
     withOptions: false,
@@ -43,7 +43,7 @@ export const jobFormData = [
   },
   {
     id: 7,
-    name: 'JobUrl',
+    name: 'jobUrl',
     required: false,
     placeholder: 'Job Url (optional)',
     withOptions: false,
@@ -60,4 +60,7 @@ export const jobFormData = [
   }),
   offerSallary: z.string(),
   jobUrl: z.string(),
+  currentStatus: z.string(),
+  workMode: z.string(),
+  jobDescription: z.string(),
 })

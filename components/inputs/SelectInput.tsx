@@ -1,21 +1,25 @@
-interface SelectInputProps {
+import { InputHTMLAttributes } from "react";
+import { useFormContext } from "react-hook-form";
+
+interface SelectInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  name: string;
   small?: boolean;
   x_small?: boolean;
   options?: string[];
-  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const SelectInput: React.FC<SelectInputProps> = ({
+  name,
   small,
   x_small,
   options,
-  onChange,
+  ...inputAtributes
 }) => {
+  const { register } = useFormContext();
   return (
     <select
-      onChange={onChange}
-      name=""
-      id=""
+      id={name}
+      {...register(name)}
       className={`
         ${x_small! && small! && "w-full text-lg p-4"}
         ${small && "px-4 py-3 w-full text-lg"}
