@@ -36,7 +36,7 @@ export default NextAuth({
 
         // If the user is not found, or if they don't have a hashed password, throw an error
         if (!user || !user?.hashedPassword) {
-          throw new Error('Invalid credentials')
+          throw new Error('This user does not exist')
         }
 
         // Compare the password provided by the user with the stored hashed password

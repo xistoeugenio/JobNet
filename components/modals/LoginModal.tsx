@@ -1,14 +1,17 @@
 import useLoginModal from "@/hooks/useLoginModal";
 import { useState, useCallback } from "react";
-import { signIn } from "next-auth/react";
 import Input from "../inputs/Input";
 import Modal from "../Modal";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import { z } from "zod";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import useSignIn from "@/hooks/useSignIn";
+import { toast } from "react-hot-toast";
 
 const LoginModal = () => {
+  const signIn = useSignIn;
+
   //MODALS HOOKS
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
@@ -48,9 +51,10 @@ const LoginModal = () => {
   const login = async (data: loginDatatype) => {
     try {
       setIsLoading(true);
-      await signIn("credentials", data);
+      await signIn(data);
       loginModal.onClose();
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error?.message.toString());
       console.log(error);
     } finally {
       setIsLoading(false);

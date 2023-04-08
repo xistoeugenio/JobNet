@@ -18,7 +18,7 @@ const Input: React.FC<InputsProps> = ({
     <input
     id={name}
       className={`
-      ${xsmall! && small! && "w-full text-lg p-4"}
+      ${!xsmall && !small && "w-full text-lg p-4"}
       ${small && "px-4 py-3 w-full text-lg"}
       ${xsmall && "p-2 text-base w-5/6"}
           placeholder-neutral-600
