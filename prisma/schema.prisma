@@ -27,10 +27,8 @@ model JobsApplied {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   title          String
   companyName    String
-  location       String?
   dataApplied    DateTime @default(now())
   offerSallary   String?
-  resume         String?
   currentStatus  String?
   jobDescription String?
   jobUrl         String?

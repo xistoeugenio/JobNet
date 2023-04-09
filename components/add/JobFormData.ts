@@ -58,9 +58,9 @@ export const jobFormData = [
   companyName: z.string().nonempty({
     message: 'The company name is required',
   }),
-  offerSallary: z.string(),
-  jobUrl: z.string(),
-  currentStatus: z.string(),
-  workMode: z.string(),
-  jobDescription: z.string(),
+  offerSallary: z.string().optional(),
+  jobUrl: z.string().optional(),
+  currentStatus: z.string().optional(),
+  workMode: z.string().optional(),
+  jobDescription: z.string().optional(),
 })

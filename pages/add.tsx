@@ -6,18 +6,30 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createJobSchema, jobFormData } from "@/components/add/JobFormData";
 import JobInput from "@/components/add/JobInput";
+import axios from "axios";
+import useCurrentUser from "@/hooks/useCurrentUser";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/router";
 
 type createJobDatatype = z.infer<typeof createJobSchema>;
 
 const Add = () => {
+  const router = useRouter()
   const createJobForm = useForm<createJobDatatype>({
     resolver: zodResolver(createJobSchema),
   });
   const { handleSubmit } = createJobForm;
 
-  function subTest(data: createJobDatatype) {
-    //TODO the send data function
-    console.log(data);
+  const { data: currentUser } = useCurrentUser();
+  async function subTest(credentials: createJobDatatype) {
+    try {
+      await axios.post("/api/jobs", { ...credentials, userId: currentUser.id });
+      toast.success('New job added')
+      router.push('/')
+    } catch (error) {
+      toast.success('Something went wrong')
+      console.log(error);
+    }
   }
   return (
     <div className={style.addContainer}>
