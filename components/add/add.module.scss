@@ -1,10 +1,15 @@
+@import "../../styles/mixin";
+
 .addContainer {
   width: 90%;
   max-width: 900px;
   height: 90%;
   max-height: 63dvw;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 40px;
 
   form {
     background-color: #0A0A0A;
@@ -13,9 +18,12 @@
     max-height: 512px;
     display: flex;
     border-radius: 5px;
+    border: 1.5px solid gray;
   }
 
-
+  @include media-xs {
+    max-height: 90%;
+  }
 }
 
 .textArea {

@@ -30,7 +30,7 @@ const Header = () => {
           <AvatarName username={currentUser?.username} />
           <div className="flex gap-3">
             <Button label="Sign out" secondary onClick={signOut} />
-            <Button label="Add" outline onClick={goToAddPage}/>
+            <Button label="Add a job" outline onClick={goToAddPage}/>
           </div>
         </>
       ) : (

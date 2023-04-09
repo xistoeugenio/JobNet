@@ -9,6 +9,7 @@ import useLoginModal from "@/hooks/useLoginModal";
 import { z } from "zod";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import InputValidator from "../inputs/InputValidator";
 
 const RegisterModal = () => {
   //MODALS HOOKS
@@ -75,15 +76,15 @@ const RegisterModal = () => {
 
   const bodyContent = (
     <div className="flex flex-col gap-4 ">
-      <Input name="email" placeholder="Email" disabled={isloading} small />
-      <Input name="name" placeholder="Name" disabled={isloading} small />
-      <Input
+      <InputValidator name="email" placeholder="Email" disabled={isloading} small />
+      <InputValidator name="name" placeholder="Name" disabled={isloading} small />
+      <InputValidator
         name="username"
         placeholder="UserName"
         disabled={isloading}
         small
       />
-      <Input
+      <InputValidator
         name="password"
         placeholder="Password"
         disabled={isloading}

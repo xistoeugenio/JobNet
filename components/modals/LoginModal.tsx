@@ -1,6 +1,5 @@
 import useLoginModal from "@/hooks/useLoginModal";
 import { useState, useCallback } from "react";
-import Input from "../inputs/Input";
 import Modal from "../Modal";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import { z } from "zod";
@@ -8,6 +7,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import useSignIn from "@/hooks/useSignIn";
 import { toast } from "react-hot-toast";
+import InputValidator from "../inputs/InputValidator";
 
 const LoginModal = () => {
   const signIn = useSignIn;
@@ -31,7 +31,7 @@ const LoginModal = () => {
   //login schema zod
   const loginSchema = z.object({
     email: z.string().nonempty({
-      message: "The title is required",
+      message: "The email is required",
     }),
     password: z.string().nonempty({
       message: "The password is required",
@@ -62,8 +62,12 @@ const LoginModal = () => {
   };
   const bodyContent = (
     <div className="flex flex-col gap-4 ">
-      <Input name="email" placeholder="Email" disabled={isloading} />
-      <Input name="password" placeholder="Password" disabled={isloading} />
+      <InputValidator name="email" placeholder="Email" disabled={isloading} />
+      <InputValidator
+        name="password"
+        placeholder="Password"
+        disabled={isloading}
+      />
     </div>
   );
 

@@ -22,6 +22,7 @@ const Add = () => {
   return (
     <div className={style.addContainer}>
       <FormProvider {...createJobForm}>
+        <h2 className="text-3xl font-semibold text-white">Add a new job</h2>
         <form onSubmit={handleSubmit(subTest)}>
           <div className=" flex flex-1 flex-col items-center justify-around box-border p-2">
             {jobFormData.map((job, index) => (
@@ -35,7 +36,7 @@ const Add = () => {
             ))}
             <Button label="Add" outline submit />
           </div>
-          <div className=" flex-1 box-border p-3">
+          <div className=" hidden flex-1 box-border p-3 sm:block">
             <TextArea
               name="jobDescription"
               placeholder="Add your full job description here (optional)"

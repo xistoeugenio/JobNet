@@ -4,7 +4,7 @@ interface ButtonProps {
   fullWidth?: boolean;
   large?: boolean;
   onClick?: () => void;
-  submit: boolean;
+  submit?: boolean;
   disabled?: boolean;
   outline?: boolean;
 }
