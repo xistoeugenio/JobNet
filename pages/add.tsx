@@ -10,6 +10,7 @@ import axios from "axios";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
+import useJobs from "@/hooks/usejobs.";
 
 type createJobDatatype = z.infer<typeof createJobSchema>;
 
@@ -20,11 +21,13 @@ const Add = () => {
   });
   const { handleSubmit } = createJobForm;
 
+  const {mutate: mutateJobs} = useJobs()
   const { data: currentUser } = useCurrentUser();
   async function subTest(credentials: createJobDatatype) {
     try {
       await axios.post("/api/jobs", { ...credentials, userId: currentUser.id });
       toast.success('New job added')
+      mutateJobs()
       router.push('/')
     } catch (error) {
       toast.success('Something went wrong')
@@ -46,7 +49,7 @@ const Add = () => {
                 options={job.options}
               />
             ))}
-            <Button label="Add" outline submit />
+            <Button label="Add" outline submit/>
           </div>
           <div className=" hidden flex-1 box-border p-3 sm:block">
             <TextArea

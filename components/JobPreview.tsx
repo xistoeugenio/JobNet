@@ -1,29 +1,52 @@
+import { formatDistanceToNowStrict } from "date-fns";
 import { BiLinkExternal } from "react-icons/bi";
 
 interface JobPreviewProps {
   title: string;
-  company_name: string;
-  current_status: string;
+  companyName: string;
+  currentStatus: string;
+  jobUrl?: string;
+  updatedAt: string;
 }
 
 const JobPreview: React.FC<JobPreviewProps> = ({
   title,
-  company_name,
-  current_status,
+  companyName,
+  currentStatus,
+  jobUrl,
+  updatedAt,
 }) => {
+  const newUpdateAt = formatDistanceToNowStrict(new Date(updatedAt));
+
+  const goToJobUrl = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!jobUrl) {
+      event.preventDefault();
+    }
+  };
   return (
     <div className="bg-neutral-800 h-10 flex justify-between items-center box-border px-3 m-3 rounded-xl">
       <span className="bg-emerald-900 w-1/3 sm:w-1/4 text-neutral-300 rounded-md px-1 overflow-hidden whitespace-nowrap text-ellipsis text-sm sm:text-base">
         {title}
       </span>
       <span className="w-1/5 text-cyan-600 sm:text-lg overflow-hidden whitespace-nowrap text-ellipsis">
-        {company_name}
+        {companyName}
       </span>
-      <span className="w-1/4 text-neutral-400 text-xs sm:text-sm">
-        {current_status}
+      <span className="w-1/5 text-neutral-400 text-xs sm:text-sm">
+        {currentStatus}
       </span>
-      <span className="text-neutral-500 hidden sm:block">3 hours</span>
-      <BiLinkExternal className="text-red-500" />
+      <span className=" w-1/6 text-neutral-500 hidden sm:block">
+        {newUpdateAt}
+      </span>
+      <a
+        href={jobUrl || ""}
+        target="_blank"
+        onClick={goToJobUrl}
+        className={jobUrl ? "cursor-pointer" : "cursor-not-allowed"}
+      >
+        <BiLinkExternal
+          className={jobUrl ? "text-green-400" : " text-neutral-700"}
+        />
+      </a>
     </div>
   );
 };

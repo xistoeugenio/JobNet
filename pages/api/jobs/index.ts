@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 import prisma from "@/libs/prismadb";
+import serverAuth from "@/libs/serverAuth";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST' && req.method !== 'GET') {
@@ -15,6 +16,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       });
 
       return res.status(200).json(job)
+    }
+    if (req.method === 'GET') {
+      const { currentUser } = await serverAuth(req);
+      const { userId } = req.query;
+
+      console.log({ userId })
+
+
+      const jobs = await prisma.jobsApplied.findMany({
+        where: {
+          userId: currentUser.id
+        },
+        include: {
+          user: true,
+        },
+        orderBy: {
+          createdAt: 'desc'
+        }
+      });
+      return res.status(200).json(jobs)
     }
   } catch (error) {
     console.log(error)
