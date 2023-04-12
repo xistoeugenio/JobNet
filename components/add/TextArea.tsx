@@ -4,12 +4,14 @@ import style from "./add.module.scss";
 interface TextAreaProps {
   name: string;
   placeholder: string;
+  disabled?: boolean;
 }
 
-const TextArea: React.FC<TextAreaProps> = ({ name, placeholder }) => {
+const TextArea: React.FC<TextAreaProps> = ({ name, placeholder, disabled }) => {
   const { register } = useFormContext();
   return (
     <textarea
+      disabled={disabled}
       className={style.textArea}
       {...register(name)}
       placeholder={placeholder}

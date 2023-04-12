@@ -8,11 +8,34 @@ interface jobInputProps extends InputHTMLAttributes<HTMLInputElement> {
   options?: string[];
 }
 
-const JobInput = ({ name, withOptions, options, ...props }: jobInputProps) => {
+const JobInput = ({
+  name,
+  withOptions,
+  options,
+  disabled,
+  defaultValue,
+  ...props
+}: jobInputProps) => {
   if (withOptions) {
-    return <SelectInput options={options} name={name} x_small />;
+    return (
+      <SelectInput
+        options={options}
+        name={name}
+        x_small
+        disabled={disabled}
+        defaultValue={defaultValue}
+      />
+    );
   } else {
-    return <InputValidator name={name} xsmall {...props} />;
+    return (
+      <InputValidator
+        name={name}
+        xsmall
+        disabled={disabled}
+        defaultValue={defaultValue}
+        {...props}
+      />
+    );
   }
 };
 

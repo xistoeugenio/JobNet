@@ -1,4 +1,5 @@
 import { formatDistanceToNowStrict } from "date-fns";
+import { useRouter } from "next/router";
 import { BiLinkExternal } from "react-icons/bi";
 
 interface JobPreviewProps {
@@ -7,6 +8,7 @@ interface JobPreviewProps {
   currentStatus: string;
   jobUrl?: string;
   updatedAt: string;
+  jobId: string;
 }
 
 const JobPreview: React.FC<JobPreviewProps> = ({
@@ -15,6 +17,7 @@ const JobPreview: React.FC<JobPreviewProps> = ({
   currentStatus,
   jobUrl,
   updatedAt,
+  jobId,
 }) => {
   const newUpdateAt = formatDistanceToNowStrict(new Date(updatedAt));
 
@@ -23,8 +26,18 @@ const JobPreview: React.FC<JobPreviewProps> = ({
       event.preventDefault();
     }
   };
+
+  const router = useRouter();
+
+  const goToEdit = () => {
+    router.push(`/jobs/edit/${jobId}`);
+  };
+
   return (
-    <div className="bg-neutral-800 h-10 flex justify-between items-center box-border px-3 m-3 rounded-xl">
+    <div
+      className="bg-neutral-800 h-10 flex justify-between items-center box-border px-3 m-3 rounded-xl"
+      onClick={goToEdit}
+    >
       <span className="bg-emerald-900 w-1/3 sm:w-1/4 text-neutral-300 rounded-md px-1 overflow-hidden whitespace-nowrap text-ellipsis text-sm sm:text-base">
         {title}
       </span>

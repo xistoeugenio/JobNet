@@ -12,30 +12,37 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const credentials = req.body
 
       const job = await prisma.jobsApplied.create({
-        data: {...credentials}
+        data: { ...credentials }
       });
 
       return res.status(200).json(job)
     }
     if (req.method === 'GET') {
       const { currentUser } = await serverAuth(req);
-      const { userId } = req.query;
+      const { jobId } = req.query;
+      if (jobId) {
+        const job = await prisma.jobsApplied.findUnique({
+          where: {
+            id: jobId.toString()
+          }
+        });
+        return res.status(200).json(job)
+      } else {
 
-      console.log({ userId })
+        const jobs = await prisma.jobsApplied.findMany({
+          where: {
+            userId: currentUser.id
+          },
+          include: {
+            user: true,
+          },
+          orderBy: {
+            createdAt: 'desc'
+          }
+        });
+        return res.status(200).json(jobs)
+      }
 
-
-      const jobs = await prisma.jobsApplied.findMany({
-        where: {
-          userId: currentUser.id
-        },
-        include: {
-          user: true,
-        },
-        orderBy: {
-          createdAt: 'desc'
-        }
-      });
-      return res.status(200).json(jobs)
     }
   } catch (error) {
     console.log(error)

@@ -1,11 +1,13 @@
 import { InputHTMLAttributes } from "react";
 import { useFormContext } from "react-hook-form";
 
-interface SelectInputProps extends InputHTMLAttributes<HTMLInputElement> {
+interface SelectInputProps {
   name: string;
   small?: boolean;
   x_small?: boolean;
   options?: string[];
+  disabled?: boolean;
+  defaultValue?: any;
 }
 
 const SelectInput: React.FC<SelectInputProps> = ({
@@ -13,11 +15,14 @@ const SelectInput: React.FC<SelectInputProps> = ({
   small,
   x_small,
   options,
-  ...inputAtributes
+  disabled,
+  defaultValue,
 }) => {
   const { register } = useFormContext();
   return (
     <select
+      defaultValue={defaultValue}
+      disabled={disabled}
       id={name}
       {...register(name)}
       className={`
