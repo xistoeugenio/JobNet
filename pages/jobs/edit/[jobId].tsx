@@ -21,7 +21,11 @@ const Edit = () => {
   const { jobId } = router.query;
 
   //Get the previous job
-  const { data: previousJob, isLoading } = useCurrentJob(jobId);
+  const {
+    data: previousJob,
+    mutate: mutateJob,
+    isLoading,
+  } = useCurrentJob(jobId);
   const [editMode, setEditMode] = useState(false);
 
   //create the datatype
@@ -35,6 +39,7 @@ const Edit = () => {
     try {
       await axios.put(`/api/jobs/edit?jobId=${jobId}`, credentials);
       toast.success(`'${jobId}' updated succesfully`);
+      mutateJob()
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");
@@ -76,6 +81,7 @@ const Edit = () => {
                 disabled={!editMode}
                 name="jobDescription"
                 placeholder="Add your full job description here (optional)"
+                value={previousJob["jobDescription"]}
               />
             </div>
           </form>

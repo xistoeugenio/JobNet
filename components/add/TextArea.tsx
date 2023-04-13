@@ -5,9 +5,15 @@ interface TextAreaProps {
   name: string;
   placeholder: string;
   disabled?: boolean;
+  value?: string;
 }
 
-const TextArea: React.FC<TextAreaProps> = ({ name, placeholder, disabled }) => {
+const TextArea: React.FC<TextAreaProps> = ({
+  name,
+  placeholder,
+  disabled,
+  value,
+}) => {
   const { register } = useFormContext();
   return (
     <textarea
@@ -15,6 +21,7 @@ const TextArea: React.FC<TextAreaProps> = ({ name, placeholder, disabled }) => {
       className={style.textArea}
       {...register(name)}
       placeholder={placeholder}
+      defaultValue={value}
     />
   );
 };

@@ -1,4 +1,4 @@
-import style from "../components/add/add.module.scss";
+import style from "../../../components/add/add.module.scss";
 import TextArea from "@/components/add/TextArea";
 import Button from "@/components/Button";
 import { FormProvider, useForm } from "react-hook-form";

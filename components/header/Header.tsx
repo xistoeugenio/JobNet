@@ -15,7 +15,7 @@ const Header = () => {
   const router = useRouter();
 
   const goToAddPage = useCallback(() => {
-    router.push("/add");
+    router.push("/jobs/add");
   }, [router]);
 
   return (
