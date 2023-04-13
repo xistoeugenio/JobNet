@@ -5,6 +5,7 @@ import type { AppProps } from "next/app";
 import { Roboto } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import { SessionProvider } from "next-auth/react";
+import DeleteModal from "@/components/modals/DeleteModal";
 
 const roboto = Roboto({
   weight: "500",

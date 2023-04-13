@@ -1,3 +1,5 @@
+import { CSSProperties } from "react";
+
 interface ButtonProps {
   label: string;
   secondary?: boolean;
@@ -7,6 +9,7 @@ interface ButtonProps {
   submit?: boolean;
   disabled?: boolean;
   outline?: boolean;
+  aditionalStyle?: CSSProperties;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -18,6 +21,7 @@ const Button: React.FC<ButtonProps> = ({
   large,
   disabled,
   outline,
+  aditionalStyle,
 }) => {
   return (
     <button
@@ -43,6 +47,7 @@ const Button: React.FC<ButtonProps> = ({
         ${outline ? "border-white" : ""}
         ${outline ? "text-white" : ""}
       `}
+      style={aditionalStyle}
     >
       {label}
     </button>

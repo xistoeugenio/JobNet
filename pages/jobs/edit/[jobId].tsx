@@ -14,6 +14,7 @@ import useJobs from "@/hooks/usejobs.";
 import { useState } from "react";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import useCurrentJob from "@/hooks/useCurrentJob";
+import EditButtons from "@/components/edit/EditButtons";
 
 type createJobDatatype = z.infer<typeof createJobSchema>;
 
@@ -33,9 +34,9 @@ const Edit = () => {
 
   //submit function
   const { handleSubmit } = createJobForm;
-  async function subTest(credentials: createJobDatatype) {
+  async function updateJob(credentials: createJobDatatype) {
     try {
-      const {data} = await axios.put(
+      const { data } = await axios.put(
         `/api/jobs/edit?jobId=${jobId}`,
         credentials
       );
@@ -45,7 +46,7 @@ const Edit = () => {
     }
   }
 
-  //delete the job 
+  //delete the job
   const deletejob = async () => {
     try {
       await axios.delete(`/api/jobs/delete?jobId=${jobId}`);
@@ -60,7 +61,7 @@ const Edit = () => {
       ) : (
         <FormProvider {...createJobForm}>
           <h2 className="text-3xl font-semibold text-white">Update</h2>
-          <form onSubmit={handleSubmit(subTest)}>
+          <form onSubmit={handleSubmit(updateJob)}>
             <div className=" flex flex-1 flex-col items-center justify-around box-border p-2">
               {jobFormData.map((job, index) => (
                 <JobInput
@@ -76,18 +77,7 @@ const Edit = () => {
               {editMode ? (
                 <Button label="Save" outline submit />
               ) : (
-                <div className="w-40 flex justify-between">
-                  <AiOutlineDelete
-                    onClick={deletejob}
-                    className=" text-red-500"
-                    size={40}
-                  />
-                  <AiOutlineEdit
-                    className=" text-sky-600"
-                    size={40}
-                    onClick={() => setEditMode(!editMode)}
-                  />
-                </div>
+                <EditButtons onClick={() => setEditMode(true)} />
               )}
             </div>
             <div className=" hidden flex-1 box-border p-3 sm:block">
