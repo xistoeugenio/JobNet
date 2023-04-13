@@ -1,18 +1,33 @@
-
 import Avatar from "./Avatar";
 interface AvatarNameProps {
   username?: string;
+  justPreview?: boolean;
+  onClick?: () => void;
 }
 
-const AvatarName: React.FC<AvatarNameProps> = ({ username }) => {
-  return (
-    <div
-      className=" flex items-center  gap-3 box-border hover:bg-neutral-900  p-1 pr-5 rounded-full cursor-pointer"
-    >
-      <Avatar />
-      <span className=" text-yellow-100">{username}</span>
-    </div>
-  );
+const AvatarName: React.FC<AvatarNameProps> = ({
+  username,
+  justPreview,
+  onClick,
+}) => {
+  if (justPreview) {
+    return (
+      <div className=" flex items-center  gap-3 box-border  p-1 pr-5 rounded-full cursor-default">
+        <Avatar />
+        <span className=" text-yellow-100">{username}</span>
+      </div>
+    );
+  } else {
+    return (
+      <div
+        className=" flex items-center  gap-3 box-border hover:bg-neutral-900  p-1 pr-5 rounded-full cursor-pointer"
+        onClick={onClick}
+      >
+        <Avatar />
+        <span className=" text-yellow-100">{username}</span>
+      </div>
+    );
+  }
 };
 
 export default AvatarName;

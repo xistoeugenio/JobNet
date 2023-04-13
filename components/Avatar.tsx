@@ -14,7 +14,6 @@ const Avatar: React.FC<AvatarProps> = ({ isLarge, hasBorder }) => {
         ${isLarge ? "w-32" : "w-10"}
         rounded-full s
         transition 
-        cursor-pointer
         relative
       `}
     >

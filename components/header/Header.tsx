@@ -18,6 +18,9 @@ const Header = () => {
     router.push("/jobs/add");
   }, [router]);
 
+  const goToProfilePage = useCallback(() => {
+    router.push("/user/profile");
+  }, [router]);
   return (
     <div
       className=" 
@@ -29,7 +32,10 @@ const Header = () => {
     >
       {currentUser ? (
         <>
-          <AvatarName username={currentUser?.username} />
+          <AvatarName
+            username={currentUser?.username}
+            onClick={goToProfilePage}
+          />
           <div className="flex gap-3">
             <Button label="Sign out" secondary onClick={signOut} />
             <Button label="Add a job" outline onClick={goToAddPage} />
