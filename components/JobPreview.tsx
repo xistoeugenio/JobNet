@@ -24,6 +24,8 @@ const JobPreview: React.FC<JobPreviewProps> = ({
   const goToJobUrl = (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (!jobUrl) {
       event.preventDefault();
+    } else {
+      event.stopPropagation();
     }
   };
 
@@ -35,7 +37,7 @@ const JobPreview: React.FC<JobPreviewProps> = ({
 
   return (
     <div
-      className="bg-neutral-800 h-10 flex justify-between items-center box-border px-3 m-3 rounded-xl"
+      className="bg-neutral-800 h-10 flex justify-between items-center box-border px-3 m-3 rounded-xl cursor-pointer hover:bg-neutral-900"
       onClick={goToEdit}
     >
       <span className="bg-emerald-900 w-1/3 sm:w-1/4 text-neutral-300 rounded-md px-1 overflow-hidden whitespace-nowrap text-ellipsis text-sm sm:text-base">
@@ -57,7 +59,8 @@ const JobPreview: React.FC<JobPreviewProps> = ({
         className={jobUrl ? "cursor-pointer" : "cursor-not-allowed"}
       >
         <BiLinkExternal
-          className={jobUrl ? "text-green-400" : " text-neutral-700"}
+          className={jobUrl ? "text-green-400 hover:text-green-200" : " text-neutral-700"}
+          size='18px'
         />
       </a>
     </div>

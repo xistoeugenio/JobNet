@@ -7,12 +7,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createJobSchema, jobFormData } from "@/components/add/JobFormData";
 import JobInput from "@/components/add/JobInput";
 import axios from "axios";
-import useCurrentUser from "@/hooks/useCurrentUser";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
-import useJobs from "@/hooks/usejobs.";
 import { useState } from "react";
-import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import useCurrentJob from "@/hooks/useCurrentJob";
 import EditButtons from "@/components/edit/EditButtons";
 
@@ -36,24 +33,15 @@ const Edit = () => {
   const { handleSubmit } = createJobForm;
   async function updateJob(credentials: createJobDatatype) {
     try {
-      const { data } = await axios.put(
-        `/api/jobs/edit?jobId=${jobId}`,
-        credentials
-      );
-      console.log(data);
+      await axios.put(`/api/jobs/edit?jobId=${jobId}`, credentials);
+      toast.success(`'${jobId}' updated succesfully`);
     } catch (error) {
       console.log(error);
+      toast.error("Something went wrong");
+    } finally {
+      router.push("/");
     }
   }
-
-  //delete the job
-  const deletejob = async () => {
-    try {
-      await axios.delete(`/api/jobs/delete?jobId=${jobId}`);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
     <div className={style.addContainer}>
       {isLoading ? (
@@ -77,7 +65,10 @@ const Edit = () => {
               {editMode ? (
                 <Button label="Save" outline submit />
               ) : (
-                <EditButtons onClick={() => setEditMode(true)} />
+                <EditButtons
+                  onClick={() => setEditMode(true)}
+                  jobName={previousJob.title}
+                />
               )}
             </div>
             <div className=" hidden flex-1 box-border p-3 sm:block">

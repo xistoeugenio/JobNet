@@ -3,12 +3,13 @@ import Button from "../Button";
 
 interface DeleteModal {
   onClickDelete: () => void;
+  jobName: string;
 }
 
-const DeleteModal: React.FC<DeleteModal> = ({ onClickDelete }) => {
+const DeleteModal: React.FC<DeleteModal> = ({ onClickDelete, jobName }) => {
   const { onClose, isOpen } = useDeleteModal();
 
-  //Close the modal 
+  //Close the modal
   const handleClose = () => {
     onClose();
   };
@@ -26,13 +27,12 @@ const DeleteModal: React.FC<DeleteModal> = ({ onClickDelete }) => {
         <div className="h-auto border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-black outline-none focus:outline-none">
           <div className="flex items-center justify-between p-6 rounded-t">
             <h3 className="text-2xl font-medium text-white text-center">
-              Are you sure you want to delete this job application?
+              {`Are you sure you want to delete '${jobName}' application?`}
             </h3>
           </div>
           <div className="w-full flex justify-around p-6">
             <Button
               label="Cancel"
-              submit
               large
               outline
               onClick={handleClose}
@@ -40,7 +40,6 @@ const DeleteModal: React.FC<DeleteModal> = ({ onClickDelete }) => {
             />
             <Button
               label="Delete"
-              submit
               large
               outline
               onClick={onClickDelete}
