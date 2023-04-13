@@ -22,7 +22,7 @@ const Edit = () => {
   const router = useRouter();
   const { jobId } = router.query;
 
-  //Get the previous job 
+  //Get the previous job
   const { data: previousJob, isLoading } = useCurrentJob(jobId);
   const [editMode, setEditMode] = useState(false);
 
@@ -34,8 +34,25 @@ const Edit = () => {
   //submit function
   const { handleSubmit } = createJobForm;
   async function subTest(credentials: createJobDatatype) {
-    //TODO the submit function
+    try {
+      const {data} = await axios.put(
+        `/api/jobs/edit?jobId=${jobId}`,
+        credentials
+      );
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   }
+
+  //delete the job 
+  const deletejob = async () => {
+    try {
+      await axios.delete(`/api/jobs/delete?jobId=${jobId}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className={style.addContainer}>
       {isLoading ? (
@@ -57,10 +74,14 @@ const Edit = () => {
                 />
               ))}
               {editMode ? (
-                <Button label="Save" outline />
+                <Button label="Save" outline submit />
               ) : (
                 <div className="w-40 flex justify-between">
-                  <AiOutlineDelete className=" text-red-500" size={40} />
+                  <AiOutlineDelete
+                    onClick={deletejob}
+                    className=" text-red-500"
+                    size={40}
+                  />
                   <AiOutlineEdit
                     className=" text-sky-600"
                     size={40}
