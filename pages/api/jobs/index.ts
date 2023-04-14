@@ -15,6 +15,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         data: { ...credentials }
       });
 
+      const jobUser = await prisma.user
+        .findUnique({
+          where: { id: job.userId }
+        })
+
+        //this update the user increasing jobsAdded
+      if (jobUser) {
+        await prisma.user.update({
+          where: { id: jobUser.id },
+          data: {
+            jobsAdded: jobUser.jobsAdded + 1
+          }
+        });
+      } else {
+        return res.status(400).json('User not found')
+      }
+
       return res.status(200).json(job)
     }
     if (req.method === 'GET') {

@@ -2,14 +2,24 @@ import { FormProvider, useForm } from "react-hook-form";
 import InputValidator from "../inputs/InputValidator";
 import Button from "../Button";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import axios from "axios";
 
 const FormUser = () => {
   const createUserForm = useForm();
   const { handleSubmit } = createUserForm;
   const { data: currentUser } = useCurrentUser();
 
-  const updateUser = () => {
-    console.log("updated");
+  const updateUser = async (credentials) => {
+    try {
+      await axios.put(`/api/user/update?userId=${currentUser.id}`, {
+        name: credentials.name,
+        email: credentials.email,
+        phoneNumber: credentials.phoneNumber,
+      });
+      console.log(credentials);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
@@ -28,8 +38,17 @@ const FormUser = () => {
                   small
                   defaultValue={currentUser.name}
                 />
-                <InputValidator name="email" placeholder="Email" small  defaultValue={currentUser.email}/>
-                <InputValidator name="phoneNumber" placeholder="Phone number" small />
+                <InputValidator
+                  name="email"
+                  placeholder="Email"
+                  small
+                  defaultValue={currentUser.email}
+                />
+                <InputValidator
+                  name="phoneNumber"
+                  placeholder="Phone number"
+                  small
+                />
               </div>
               <Button label="Save" outline fullWidth submit />
             </div>

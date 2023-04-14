@@ -33,7 +33,7 @@ const Header = () => {
       {currentUser ? (
         <>
           <AvatarName
-            username={currentUser?.username}
+            username={currentUser?.name}
             onClick={goToProfilePage}
           />
           <div className="flex gap-3">
