@@ -28,6 +28,7 @@
     "react-hook-form": "^7.43.9",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.8.0",
+    "react-phone-number-input": "^3.2.19",
     "swr": "^2.1.2",
     "typescript": "5.0.3",
     "zod": "^3.21.4",

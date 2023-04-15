@@ -3,10 +3,11 @@ import InputValidator from "../inputs/InputValidator";
 import Button from "../Button";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import axios from "axios";
+import InputPhone from "../inputs/InputPhone/InputPhone";
 
 const FormUser = () => {
   const createUserForm = useForm();
-  const { handleSubmit } = createUserForm;
+  const { handleSubmit, control } = createUserForm;
   const { data: currentUser } = useCurrentUser();
 
   const updateUser = async (credentials) => {
@@ -14,9 +15,9 @@ const FormUser = () => {
       await axios.put(`/api/user/update?userId=${currentUser.id}`, {
         name: credentials.name,
         email: credentials.email,
-        phoneNumber: credentials.phoneNumber,
+        phoneNumber: credentials.phoneNumber || "",
       });
-      console.log(credentials);
+      console.log(credentials)
     } catch (error) {
       console.log(error);
     }
@@ -44,10 +45,10 @@ const FormUser = () => {
                   small
                   defaultValue={currentUser.email}
                 />
-                <InputValidator
+                <InputPhone
                   name="phoneNumber"
-                  placeholder="Phone number"
-                  small
+                  control={control}
+                  defaultValue ={currentUser.phoneNumber}
                 />
               </div>
               <Button label="Save" outline fullWidth submit />

@@ -1,0 +1,22 @@
+.customClass {
+  background-color: black;
+  border: 2px solid #3E3E3E;
+  border-radius: 6px;
+  padding: 12px 16px;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+
+
+  input {
+    background-color: black;
+    outline: none;
+
+    &::placeholder {
+      color: #5f5858;
+    }
+  }
+
+  select {
+    background-color: black;
+  }
+}
