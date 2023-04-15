@@ -4,20 +4,27 @@ import Button from "../Button";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import axios from "axios";
 import InputPhone from "../inputs/InputPhone/InputPhone";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { updateUserSchema } from "@/utils/formUser";
 
 const FormUser = () => {
-  const createUserForm = useForm();
-  const { handleSubmit, control } = createUserForm;
+  const createUserForm = useForm<updateUserDatatype>({
+    resolver: zodResolver(updateUserSchema),
+  });
+  const { handleSubmit, control} = createUserForm;
   const { data: currentUser } = useCurrentUser();
 
-  const updateUser = async (credentials) => {
+  type updateUserDatatype = z.infer<typeof updateUserSchema>;
+
+  const updateUser = async (credentials: updateUserDatatype) => {
     try {
       await axios.put(`/api/user/update?userId=${currentUser.id}`, {
         name: credentials.name,
         email: credentials.email,
         phoneNumber: credentials.phoneNumber || "",
       });
-      console.log(credentials)
+      console.log(credentials);
     } catch (error) {
       console.log(error);
     }
@@ -48,7 +55,7 @@ const FormUser = () => {
                 <InputPhone
                   name="phoneNumber"
                   control={control}
-                  defaultValue ={currentUser.phoneNumber}
+                  defaultValue={currentUser.phoneNumber}
                 />
               </div>
               <Button label="Save" outline fullWidth submit />
