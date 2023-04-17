@@ -1,12 +1,14 @@
 import Avatar from "./Avatar";
 interface AvatarNameProps {
   username?: string;
+  userImage: string
   justPreview?: boolean;
   onClick?: () => void;
 }
 
 const AvatarName: React.FC<AvatarNameProps> = ({
   username,
+  userImage,
   justPreview,
   onClick,
 }) => {
@@ -23,7 +25,7 @@ const AvatarName: React.FC<AvatarNameProps> = ({
         className=" flex items-center  gap-3 box-border hover:bg-neutral-900  p-1 pr-5 rounded-full cursor-pointer"
         onClick={onClick}
       >
-        <Avatar />
+        <Avatar userImage={userImage}/>
         <span className=" text-yellow-100">{username}</span>
       </div>
     );

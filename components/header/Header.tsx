@@ -34,6 +34,7 @@ const Header = () => {
         <>
           <AvatarName
             username={currentUser?.name}
+            userImage={currentUser?.image}
             onClick={goToProfilePage}
           />
           <div className="flex gap-3">

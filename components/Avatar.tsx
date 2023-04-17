@@ -1,11 +1,12 @@
 import Image from "next/image";
 
 interface AvatarProps {
+  userImage?: string;
   isLarge?: boolean;
   hasBorder?: boolean;
 }
 
-const Avatar: React.FC<AvatarProps> = ({ isLarge, hasBorder }) => {
+const Avatar: React.FC<AvatarProps> = ({ userImage, isLarge, hasBorder }) => {
   return (
     <div
       className={`
@@ -24,7 +25,7 @@ const Avatar: React.FC<AvatarProps> = ({ isLarge, hasBorder }) => {
           borderRadius: "100%",
         }}
         alt="Avatar"
-        src={"/images/placeholder.png"}
+        src={userImage || "/images/placeholder.png"}
       />
     </div>
   );

@@ -9,6 +9,10 @@ import {
 import React, { useState } from "react";
 import Cropper from "react-easy-crop";
 import getCroppedImg from "../utils/cropImage";
+import * as Photos from "../services/photos";
+import { Photo } from "@/types/Photos";
+import axios from "axios";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 interface CropEasy {
   photoURL: string;
@@ -24,10 +28,21 @@ const CropEasy: React.FC<CropEasy> = ({ photoURL, onClose }) => {
     setCroppedAreaPixels(croppedAreaPixels);
   };
 
+  const { data: currentUser } = useCurrentUser();
+
   const cropImage = async () => {
     try {
-      const { file, url } = await getCroppedImg(photoURL, croppedAreaPixels);
-      console.log([file, url]);
+      const { file } = await getCroppedImg(photoURL, croppedAreaPixels);
+
+      //upload the image in firebase
+      const { url } = (await Photos.insert(file)) as Photo;
+
+      //Update the user image
+      await axios.put(`/api/user/update?userId=${currentUser.id}`, {
+        image: url,
+      });
+
+      onClose()
     } catch (error) {
       console.log(error);
     }
@@ -55,7 +70,7 @@ const CropEasy: React.FC<CropEasy> = ({ photoURL, onClose }) => {
       <DialogActions sx={{ flexDirection: "column", mx: 3, my: 2 }}>
         <Box sx={{ width: "100%", mb: 1 }}>
           <Box>
-            <Typography color='white'>Zoom: {zoomPercent(zoom)}</Typography>
+            <Typography color="white">Zoom: {zoomPercent(zoom)}</Typography>
             <Slider
               valueLabelDisplay="auto"
               valueLabelFormat={zoomPercent}
