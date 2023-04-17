@@ -1,6 +1,9 @@
 import Image from "next/image";
 import { BiBriefcase, BiCalendar } from "react-icons/bi";
-import Button from "../Button";
+import { useState, FormEvent, ChangeEvent } from "react";
+import { toast } from "react-hot-toast";
+import useCropImage from "@/hooks/useCropImage";
+import InputFile from "../inputs/inputCrop/InputFile";
 
 const InfoUser = () => {
   return (
@@ -23,10 +26,7 @@ const InfoUser = () => {
           <BiBriefcase />
           <span>jobs added : 13</span>
         </div>
-        <Button
-          label="Update image"
-          aditionalStyle={{ padding: "2px", fontSize: "12px" }}
-        />
+        <InputFile />
       </div>
     </div>
   );
