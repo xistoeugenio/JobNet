@@ -6,6 +6,7 @@ import { Roboto } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import { SessionProvider } from "next-auth/react";
 import DeleteModal from "@/components/modals/DeleteModal";
+import Head from "next/head";
 
 const roboto = Roboto({
   weight: "500",
@@ -15,6 +16,9 @@ const roboto = Roboto({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
+      <Head>
+        <title>JobNet</title>
+      </Head>
       <Toaster />
       <div className="h-screen flex items-center justify-center">
         <LoginModal />

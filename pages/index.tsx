@@ -7,9 +7,15 @@ import HomePage from "@/components/HomePage";
 export default function Home() {
   const { data: currentUser, isLoading } = useCurrentUser();
   return (
-    <div className={styles.homeContainer}>
-      <Header />
-      {currentUser ? <ListJobs /> : <HomePage />}
-    </div>
+    <>
+      {isLoading ? (
+        <h1 className="text-neutral-100">(loading)</h1>
+      ) : (
+        <div className={styles.homeContainer}>
+          <Header />
+          {currentUser ? <ListJobs /> : <HomePage />}
+        </div>
+      )}
+    </>
   );
 }

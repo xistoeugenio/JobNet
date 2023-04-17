@@ -7,62 +7,72 @@ import InputPhone from "../inputs/InputPhone/InputPhone";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateUserSchema } from "@/utils/formUser";
+import { toast } from "react-hot-toast";
+import { useState } from "react";
 
 const FormUser = () => {
+  const [loading, setLoading] = useState(false);
+
   const createUserForm = useForm<updateUserDatatype>({
     resolver: zodResolver(updateUserSchema),
   });
-  const { handleSubmit, control} = createUserForm;
-  const { data: currentUser } = useCurrentUser();
+  const { handleSubmit, control } = createUserForm;
+  const { data: currentUser, mutate } = useCurrentUser();
 
   type updateUserDatatype = z.infer<typeof updateUserSchema>;
 
   const updateUser = async (credentials: updateUserDatatype) => {
     try {
+      setLoading(true);
+
       await axios.put(`/api/user/update?userId=${currentUser.id}`, {
         name: credentials.name,
-        email: credentials.email,
         phoneNumber: credentials.phoneNumber || "",
       });
-      console.log(credentials);
+
+      toast.success("Updated succesfully");
+      mutate();
     } catch (error) {
+      toast.error("Something went wrong");
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
   return (
     <>
-      {currentUser ? (
-        <FormProvider {...createUserForm}>
-          {" "}
-          <form
-            className=" bg-neutral-950 flex-1 flex justify-center rounded-md border-neutral-800 border-2"
-            onSubmit={handleSubmit(updateUser)}
-          >
-            <div className="h-full w-96 flex flex-col justify-between gap-5 p-5">
-              <div className="h-4/5 max-h-60 flex flex-col justify-between">
-                <InputValidator
-                  name="name"
-                  placeholder="Name"
-                  small
-                  defaultValue={currentUser.name}
-                />
-                <InputValidator
-                  name="email"
-                  placeholder="Email"
-                  small
-                  defaultValue={currentUser.email}
-                />
-                <InputPhone
-                  name="phoneNumber"
-                  control={control}
-                  defaultValue={currentUser.phoneNumber}
-                />
-              </div>
-              <Button label="Save" outline fullWidth submit />
+      <FormProvider {...createUserForm}>
+        {" "}
+        <form
+          className=" bg-neutral-950 flex-1 flex justify-center rounded-md border-neutral-800 border-2"
+          onSubmit={handleSubmit(updateUser)}
+        >
+          <div className="h-full w-96 flex flex-col justify-between gap-5 p-5">
+            <div className="h-4/5 max-h-60 flex flex-col justify-between">
+              <InputValidator
+                name="email"
+                placeholder="Email"
+                small
+                disabled
+                required={false}
+                defaultValue={currentUser.email}
+              />
+              <InputValidator
+                name="name"
+                placeholder="Name"
+                small
+                defaultValue={currentUser.name}
+              />
+              <InputPhone
+                name="phoneNumber"
+                control={control}
+                defaultValue={currentUser.phoneNumber}
+              />
             </div>
-          </form>
-        </FormProvider>
-      ) : null}
+            <Button label="Save" disabled={loading} outline fullWidth submit />
+          </div>
+        </form>
+      </FormProvider>
     </>
   );
 };

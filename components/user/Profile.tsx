@@ -4,7 +4,6 @@ import InfoUser from "./InfoUser";
 
 const Profile = ({}) => {
   const { data: currentUser } = useCurrentUser();
-  console.log(currentUser)
   return (
     <div className="w-full h-full flex items-center justify-center p-4">
       <div className="w-full max-w-sm h-full flex flex-col gap-6 text-neutral-300 ">

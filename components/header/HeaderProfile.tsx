@@ -1,14 +1,8 @@
 import React from "react";
-import AvatarName from "../AvatarName";
 import { FiLogOut } from "react-icons/fi";
 import { signOut } from "next-auth/react";
-import { useRouter } from "next/router";
 
-interface HeaderProfile {
-  name: string;
-}
-
-const HeaderProfile: React.FC<HeaderProfile> = ({ name }) => {
+const HeaderProfile = () => {
   const handleSignOut = async () => {
     await signOut({ callbackUrl: '/' });
   };
@@ -21,7 +15,7 @@ const HeaderProfile: React.FC<HeaderProfile> = ({ name }) => {
     border-b-2 border-gray-500
     "
     >
-      <AvatarName username={name} justPreview />
+      <h2 className="text-neutral-100">Back</h2>
       <div className="flex gap-3">
         <button onClick={handleSignOut}>
           <FiLogOut

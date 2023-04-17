@@ -13,6 +13,8 @@ import * as Photos from "../services/photos";
 import { Photo } from "@/types/Photos";
 import axios from "axios";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import { ClipLoader } from "react-spinners";
+import { toast } from "react-hot-toast";
 
 interface CropEasy {
   photoURL: string;
@@ -28,10 +30,11 @@ const CropEasy: React.FC<CropEasy> = ({ photoURL, onClose }) => {
     setCroppedAreaPixels(croppedAreaPixels);
   };
 
-  const { data: currentUser } = useCurrentUser();
-
+  const { data: currentUser, mutate } = useCurrentUser();
+  const [isUploading, setIsUploading] = useState(false);
   const cropImage = async () => {
     try {
+      setIsUploading(true);
       const { file } = await getCroppedImg(photoURL, croppedAreaPixels);
 
       //upload the image in firebase
@@ -41,10 +44,14 @@ const CropEasy: React.FC<CropEasy> = ({ photoURL, onClose }) => {
       await axios.put(`/api/user/update?userId=${currentUser.id}`, {
         image: url,
       });
-
-      onClose()
+      toast.success("Image upload succesfully");
     } catch (error) {
+      toast.error("something went wrong!");
       console.log(error);
+    } finally {
+      mutate();
+      setIsUploading(false);
+      onClose();
     }
   };
   return (
@@ -68,34 +75,36 @@ const CropEasy: React.FC<CropEasy> = ({ photoURL, onClose }) => {
         />
       </DialogContent>
       <DialogActions sx={{ flexDirection: "column", mx: 3, my: 2 }}>
-        <Box sx={{ width: "100%", mb: 1 }}>
-          <Box>
-            <Typography color="white">Zoom: {zoomPercent(zoom)}</Typography>
-            <Slider
-              valueLabelDisplay="auto"
-              valueLabelFormat={zoomPercent}
-              min={1}
-              max={3}
-              step={0.1}
-              value={zoom}
-              onChange={(e, zoom: any) => setZoom(zoom)}
-            />
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            gap: 2,
-            flexWrap: "wrap",
-          }}
-        >
-          <Button variant="outlined" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button variant="contained" onClick={cropImage}>
-            Crop
-          </Button>
-        </Box>
+        {/*Handle the uploading state */}
+
+        {isUploading ? (
+          <ClipLoader color="lightblue" size={80} />
+        ) : (
+          <>
+            <Box sx={{ width: "100%", mb: 1 }}>
+              <Box>
+                <Typography color="white">Zoom: {zoomPercent(zoom)}</Typography>
+                <Slider
+                  valueLabelDisplay="auto"
+                  valueLabelFormat={zoomPercent}
+                  min={1}
+                  max={3}
+                  step={0.1}
+                  value={zoom}
+                  onChange={(e, zoom: any) => setZoom(zoom)}
+                />
+              </Box>
+            </Box>
+            <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
+              <Button variant="outlined" onClick={onClose}>
+                Cancel
+              </Button>
+              <Button variant="contained" onClick={cropImage}>
+                Update
+              </Button>
+            </Box>
+          </>
+        )}
       </DialogActions>
     </>
   );

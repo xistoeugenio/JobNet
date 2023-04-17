@@ -9,16 +9,27 @@ const CropModal = React.lazy(() => import("@/components/modals/CropModal"));
 
 export default function User() {
   const { isOpen } = useCropImage();
+  const { isLoading } = useCurrentUser();
   return (
-    <div className={styles.homeContainer}>
-      <HeaderProfile name="Xisto Eugenio" />
-      <Profile />
-      {isOpen && (
-        // Load the CropModal component dynamically
-        <React.Suspense fallback={<div>Loading...</div>}>
-          <CropModal />
-        </React.Suspense>
+    <>
+      {isLoading ? (
+        <h1 className="text-neutral-100">(loading)</h1>
+      ) : (
+        <div className={styles.homeContainer}>
+          <HeaderProfile/>
+          <Profile />
+          {isOpen && (
+            // Load the CropModal component dynamically
+            <React.Suspense
+              fallback={
+                <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-neutral-900 bg-opacity-80"></div>
+              }
+            >
+              <CropModal />
+            </React.Suspense>
+          )}
+        </div>
       )}
-    </div>
+    </>
   );
 }

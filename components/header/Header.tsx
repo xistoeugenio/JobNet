@@ -2,7 +2,6 @@ import React from "react";
 import AvatarName from "../AvatarName";
 import Button from "../Button";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { signOut } from "next-auth/react";
 import useLoginModal from "@/hooks/useLoginModal";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
@@ -37,10 +36,7 @@ const Header = () => {
             userImage={currentUser?.image}
             onClick={goToProfilePage}
           />
-          <div className="flex gap-3">
-            <Button label="Sign out" secondary onClick={signOut} />
-            <Button label="Add a job" outline onClick={goToAddPage} />
-          </div>
+          <Button label="Add a job" outline onClick={goToAddPage} />
         </>
       ) : (
         <>

@@ -12,9 +12,6 @@ const validatePhoneNumber = (phoneNumber: string | undefined) => {
 
 //this is the schema create by zod
 export const updateUserSchema = z.object({
-  email: z.string().nonempty({
-    message: "The email is required",
-  }),
   name: z.string().nonempty({
     message: "the name is required",
   }),
