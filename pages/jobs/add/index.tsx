@@ -11,33 +11,38 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import useJobs from "@/hooks/usejobs.";
+import HeaderEdit from "@/components/header/HeaderEdit";
 
 type createJobDatatype = z.infer<typeof createJobSchema>;
 
 const Add = () => {
-  const router = useRouter()
+  const router = useRouter();
   const createJobForm = useForm<createJobDatatype>({
     resolver: zodResolver(createJobSchema),
   });
   const { handleSubmit } = createJobForm;
 
-  const {mutate: mutateJobs} = useJobs()
+  const { mutate: mutateJobs } = useJobs();
   const { data: currentUser } = useCurrentUser();
   async function subTest(credentials: createJobDatatype) {
     try {
       await axios.post("/api/jobs", { ...credentials, userId: currentUser.id });
-      toast.success('New job added')
-      mutateJobs()
-      router.push('/')
+      toast.success("New job added");
+      mutateJobs();
+      router.push("/");
     } catch (error) {
-      toast.success('Something went wrong')
+      toast.success("Something went wrong");
       console.log(error);
     }
   }
+
+  const resetFormInputs = () => {
+    createJobForm.reset();
+  };
   return (
     <div className={style.addContainer}>
+      <HeaderEdit onResetClick={resetFormInputs} />
       <FormProvider {...createJobForm}>
-        <h2 className="text-3xl font-semibold text-white">Add a new job</h2>
         <form onSubmit={handleSubmit(subTest)}>
           <div className=" flex flex-1 flex-col items-center justify-around box-border p-2">
             {jobFormData.map((job, index) => (
@@ -49,7 +54,7 @@ const Add = () => {
                 options={job.options}
               />
             ))}
-            <Button label="Add" outline submit/>
+            <Button label="Add" outline submit />
           </div>
           <div className=" hidden flex-1 box-border p-3 sm:block">
             <TextArea

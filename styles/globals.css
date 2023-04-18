@@ -2,10 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
-:root{
+:root {
   @apply h-full bg-black;
 }
 
 body {
   @apply h-full bg-black;
+}
+
+.headerStart {
+  display: flex;
+  animation: animationSize 2s alternate;
+}
+
+
+@keyframes animationSize {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+
+  60%{
+    height: 100px;
+  }
+
+  80% {
+    opacity: 0;
+  }
+
+  90% {
+    height: 64px;
+
+  }
+
+  100% {
+
+    opacity: 1;
+  }
 }

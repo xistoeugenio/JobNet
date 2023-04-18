@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import useCurrentJob from "@/hooks/useCurrentJob";
 import EditButtons from "@/components/edit/EditButtons";
+import HeaderEdit from "@/components/header/HeaderEdit";
 
 type createJobDatatype = z.infer<typeof createJobSchema>;
 
@@ -39,7 +40,7 @@ const Edit = () => {
     try {
       await axios.put(`/api/jobs/edit?jobId=${jobId}`, credentials);
       toast.success(`'${jobId}' updated succesfully`);
-      mutateJob()
+      mutateJob();
     } catch (error) {
       console.log(error);
       toast.error("Something went wrong");
@@ -47,45 +48,52 @@ const Edit = () => {
       router.push("/");
     }
   }
+
+  const resetFormInputs = () => {
+    createJobForm.reset();
+  };
+
   return (
     <div className={style.addContainer}>
       {isLoading ? (
         <h1>loading</h1>
       ) : (
-        <FormProvider {...createJobForm}>
-          <h2 className="text-3xl font-semibold text-white">Update</h2>
-          <form onSubmit={handleSubmit(updateJob)}>
-            <div className=" flex flex-1 flex-col items-center justify-around box-border p-2">
-              {jobFormData.map((job, index) => (
-                <JobInput
-                  name={job.name}
-                  key={index}
-                  placeholder={job.name}
-                  withOptions={job.withOptions}
-                  options={job.options}
+        <>
+        <HeaderEdit jobName={previousJob.title} onResetClick={resetFormInputs}/>
+          <FormProvider {...createJobForm}>
+            <form onSubmit={handleSubmit(updateJob)}>
+              <div className=" flex flex-1 flex-col items-center justify-around box-border p-2">
+                {jobFormData.map((job, index) => (
+                  <JobInput
+                    name={job.name}
+                    key={index}
+                    placeholder={job.name}
+                    withOptions={job.withOptions}
+                    options={job.options}
+                    disabled={!editMode}
+                    defaultValue={previousJob && previousJob[job.name]}
+                  />
+                ))}
+                {editMode ? (
+                  <Button label="Save" outline submit />
+                ) : (
+                  <EditButtons
+                    onClick={() => setEditMode(true)}
+                    jobName={previousJob.title}
+                  />
+                )}
+              </div>
+              <div className=" hidden flex-1 box-border p-3 sm:block">
+                <TextArea
                   disabled={!editMode}
-                  defaultValue={previousJob && previousJob[job.name]}
+                  name="jobDescription"
+                  placeholder="Add your full job description here (optional)"
+                  value={previousJob["jobDescription"]}
                 />
-              ))}
-              {editMode ? (
-                <Button label="Save" outline submit />
-              ) : (
-                <EditButtons
-                  onClick={() => setEditMode(true)}
-                  jobName={previousJob.title}
-                />
-              )}
-            </div>
-            <div className=" hidden flex-1 box-border p-3 sm:block">
-              <TextArea
-                disabled={!editMode}
-                name="jobDescription"
-                placeholder="Add your full job description here (optional)"
-                value={previousJob["jobDescription"]}
-              />
-            </div>
-          </form>
-        </FormProvider>
+              </div>
+            </form>
+          </FormProvider>
+        </>
       )}
     </div>
   );

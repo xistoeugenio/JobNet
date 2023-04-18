@@ -7,7 +7,11 @@ import { useRouter } from "next/router";
 import { useCallback } from "react";
 import useRegisterModal from "@/hooks/useRegisterModal";
 
-const Header = () => {
+interface Header {
+  loadHeader: boolean;
+}
+
+const Header: React.FC<Header> = ({ loadHeader }) => {
   const { data: currentUser } = useCurrentUser();
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
@@ -22,12 +26,13 @@ const Header = () => {
   }, [router]);
   return (
     <div
-      className=" 
+      className={`     
+      ${loadHeader && 'headerStart'} 
     h-16
-    flex justify-between items-center
+    hidden justify-between items-center
     box-border px-5 
     border-b-2 border-gray-500
-    "
+    `}
     >
       {currentUser ? (
         <>
