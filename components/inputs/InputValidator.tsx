@@ -1,6 +1,7 @@
 import { ErrorMessage } from "./ErrorMessage";
 import Input from "./Input";
 import { InputHTMLAttributes } from "react";
+import InputPassword from "./InputPassword";
 
 interface jobInputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
@@ -8,12 +9,21 @@ interface jobInputProps extends InputHTMLAttributes<HTMLInputElement> {
   options?: string[];
   xsmall?: boolean;
   small?: boolean;
+  password?: boolean;
 }
 
-const InputValidator: React.FC<jobInputProps> = ({ name, ...props }) => {
+const InputValidator: React.FC<jobInputProps> = ({
+  name,
+  password,
+  ...props
+}) => {
   return (
     <div className="w-full flex flex-col items-center">
-      <Input name={name} {...props} />
+      {password ? (
+        <InputPassword name={name} {...props} />
+      ) : (
+        <Input name={name} {...props} />
+      )}
       <ErrorMessage field={name} />
     </div>
   );

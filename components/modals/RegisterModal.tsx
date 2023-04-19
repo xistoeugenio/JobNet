@@ -30,19 +30,41 @@ const RegisterModal = () => {
 
   //register schema
   const registerSchema = z.object({
-    email: z.string().nonempty({
-      message: "The email is required",
-    }),
+    email: z
+      .string()
+      .email({
+        message: "Invalid email format",
+      })
+      .nonempty({
+        message: "Email is required",
+      }),
     name: z.string().nonempty({
-      message: "The name is required",
+      message: "Name is required",
     }),
-    username: z.string().nonempty({
-      message: "The username is required",
-    }),
-    password: z.string().nonempty({
-      message: "The password is required",
-    }),
+    username: z
+      .string()
+      .regex(/^[a-zA-Z0-9_]+$/, {
+        message: "Username can only contain letters, numbers and underscores",
+      })
+      .nonempty({
+        message: "Username is required",
+      }),
+    password: z
+      .string()
+      .nonempty({
+        message: "Password is required",
+      }),
+    passwordConfirm: z.string(),
+  }).superRefine(({ passwordConfirm, password }, ctx) => {
+    if (passwordConfirm !== password) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Password and Confirm Password must match",
+        path: ["passwordConfirm"],
+      });
+    }
   });
+  
 
   //register schema type
   type registerDatatype = z.infer<typeof registerSchema>;
@@ -89,6 +111,14 @@ const RegisterModal = () => {
         placeholder="Password"
         disabled={isloading}
         small
+        password
+      />
+      <InputValidator
+        name="passwordConfirm"
+        placeholder="confirm your password"
+        disabled={isloading}
+        small
+        password
       />
       {/*Change this to a truly password verification */}
     </div>

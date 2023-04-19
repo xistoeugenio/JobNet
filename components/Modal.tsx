@@ -42,7 +42,7 @@ const Modal: React.FC<InputsProps> = ({
         {/*content*/}
         <div className="h-full lg:h-auto border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-black outline-none focus:outline-none">
           {/*header*/}
-          <div className="flex items-center justify-between p-10 rounded-t">
+          <div className="flex items-center justify-between p-7 rounded-t">
             <h3 className="text-3xl font-semibold text-white">{title}</h3>
             <button
               type="button"
@@ -53,9 +53,9 @@ const Modal: React.FC<InputsProps> = ({
             </button>
           </div>
           {/*body*/}
-          <div className="relative px-10 py-2 flex-auto">{body}</div>
+          <div className="relative px-7 py-2 flex-auto ">{body}</div>
           {/*footer*/}
-          <div className="flex flex-col gap-2 p-10">
+          <div className="flex flex-col gap-2 p-7">
             <Button label={actionLabel} submit secondary fullWidth large />
             {footer}
           </div>

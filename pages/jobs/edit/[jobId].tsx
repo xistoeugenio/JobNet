@@ -13,6 +13,7 @@ import { useState } from "react";
 import useCurrentJob from "@/hooks/useCurrentJob";
 import EditButtons from "@/components/edit/EditButtons";
 import HeaderEdit from "@/components/header/HeaderEdit";
+import { ClipLoader } from "react-spinners";
 
 type createJobDatatype = z.infer<typeof createJobSchema>;
 
@@ -56,10 +57,13 @@ const Edit = () => {
   return (
     <div className={style.addContainer}>
       {isLoading ? (
-        <h1>loading</h1>
+        <ClipLoader color="lightblue" size={80} />
       ) : (
         <>
-        <HeaderEdit jobName={previousJob.title} onResetClick={resetFormInputs}/>
+          <HeaderEdit
+            jobName={previousJob.title}
+            onResetClick={resetFormInputs}
+          />
           <FormProvider {...createJobForm}>
             <form onSubmit={handleSubmit(updateJob)}>
               <div className=" flex flex-1 flex-col items-center justify-around box-border p-2">

@@ -30,9 +30,14 @@ const LoginModal = () => {
 
   //login schema zod
   const loginSchema = z.object({
-    email: z.string().nonempty({
-      message: "The email is required",
-    }),
+    email: z
+      .string()
+      .email({
+        message: "Invalid email format",
+      })
+      .nonempty({
+        message: "Email is required",
+      }),
     password: z.string().nonempty({
       message: "The password is required",
     }),
