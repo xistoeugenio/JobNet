@@ -4,6 +4,7 @@ import Profile from "../../../components/user/Profile";
 import HeaderProfile from "@/components/header/HeaderProfile";
 import React, { useState } from "react";
 import useCropImage from "@/hooks/useCropImage";
+import { ClipLoader } from "react-spinners";
 
 const CropModal = React.lazy(() => import("@/components/modals/CropModal"));
 
@@ -13,8 +14,8 @@ export default function User() {
   return (
     <>
       {isLoading ? (
-        <h1 className="text-neutral-100">(loading)</h1>
-      ) : (
+          <ClipLoader color="lightblue" size={80} />
+          ) : (
         <div className={styles.homeContainer}>
           <HeaderProfile/>
           <Profile />

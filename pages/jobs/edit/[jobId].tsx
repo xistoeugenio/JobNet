@@ -71,7 +71,7 @@ const Edit = () => {
                   <JobInput
                     name={job.name}
                     key={index}
-                    placeholder={job.name}
+                    placeholder={job.placeholder}
                     withOptions={job.withOptions}
                     options={job.options}
                     disabled={!editMode}
