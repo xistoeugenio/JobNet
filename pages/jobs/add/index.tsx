@@ -12,6 +12,7 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import useJobs from "@/hooks/usejobs.";
 import HeaderEdit from "@/components/header/HeaderEdit";
+import DescriptionContainer from "@/components/add/DescriptionContainer";
 
 type createJobDatatype = z.infer<typeof createJobSchema>;
 
@@ -56,11 +57,8 @@ const Add = () => {
             ))}
             <Button label="Add" outline submit />
           </div>
-          <div className=" hidden flex-1 box-border p-3 sm:block">
-            <TextArea
-              name="jobDescription"
-              placeholder="Add your full job description here (optional)"
-            />
+          <div className="hidden flex-1 box-border p-3 sm:block">
+            <DescriptionContainer />
           </div>
         </form>
       </FormProvider>
