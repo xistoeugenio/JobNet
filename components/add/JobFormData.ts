@@ -1,4 +1,4 @@
-import {z} from "zod"
+import { z } from "zod"
 
 export const jobFormData = [
   {
@@ -51,7 +51,7 @@ export const jobFormData = [
 
 ]
 
-  export const createJobSchema = z.object({
+export const createJobSchema = z.object({
   title: z.string().nonempty({
     message: 'The title is required',
   }),
@@ -63,4 +63,21 @@ export const jobFormData = [
   currentStatus: z.string().optional(),
   workMode: z.string().optional(),
   jobDescription: z.string().optional(),
+  //this just verify if the value of the input is type of file
+  resume: z.unknown().refine((value) => {
+    if (value instanceof FileList) {
+      return true
+    } else {
+      return false
+    }
+  }, {
+    message: "The resume file must be in PDF format",
+    //if the value is a file array, returned the first item
+  }).transform(value => {
+    if (value instanceof FileList) {
+      return value[0]
+    }else if (typeof value === 'string'){
+      return value
+    }
+  })
 })

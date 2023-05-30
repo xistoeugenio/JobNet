@@ -5,7 +5,6 @@ import TextArea from "./TextArea";
 
 const DescriptionContainer = () => {
   const [currentField, setCurrentField] = useState("Description");
-  console.log(currentField)
 
   return (
     <div className="h-full">
@@ -14,7 +13,7 @@ const DescriptionContainer = () => {
         {currentField === "Resume" ? (
           <Resume />
         ) : (
-          <TextArea name="description" placeholder="This is your description" />
+          <TextArea name="jobDescription" placeholder="This is your description" />
         )}
       </div>
     </div>

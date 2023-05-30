@@ -1,18 +1,20 @@
 import style from "../../../components/add/add.module.scss";
-import TextArea from "@/components/add/TextArea";
 import Button from "@/components/Button";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createJobSchema, jobFormData } from "@/components/add/JobFormData";
-import JobInput from "@/components/add/JobInput";
 import axios from "axios";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import useJobs from "@/hooks/usejobs.";
-import HeaderEdit from "@/components/header/HeaderEdit";
+import { resumeUpload } from "@/services/resumePdf";
+
+//Components
 import DescriptionContainer from "@/components/add/DescriptionContainer";
+import HeaderEdit from "@/components/header/HeaderEdit";
+import JobInput from "@/components/add/JobInput";
 
 type createJobDatatype = z.infer<typeof createJobSchema>;
 
@@ -26,6 +28,20 @@ const Add = () => {
   const { mutate: mutateJobs } = useJobs();
   const { data: currentUser } = useCurrentUser();
   async function subTest(credentials: createJobDatatype) {
+
+    if (credentials.resume instanceof File) {
+      //this is responsible to upload to firebase
+      try {
+        const resumeUrl = await resumeUpload(credentials.resume);
+        credentials = {...credentials, resume: resumeUrl }
+      } catch (error) {
+        toast.error('Your resume faild')
+        console.log(error);
+      }
+    }
+
+    //This cadd a new job to mongoDb
+
     try {
       await axios.post("/api/jobs", { ...credentials, userId: currentUser.id });
       toast.success("New job added");
@@ -40,6 +56,7 @@ const Add = () => {
   const resetFormInputs = () => {
     createJobForm.reset();
   };
+
   return (
     <div className={style.addContainer}>
       <HeaderEdit onResetClick={resetFormInputs} />
