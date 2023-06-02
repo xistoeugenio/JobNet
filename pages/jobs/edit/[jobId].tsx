@@ -1,19 +1,22 @@
 import style from "../../../components/add/add.module.scss";
-import TextArea from "@/components/add/TextArea";
-import Button from "@/components/Button";
 import { FormProvider, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createJobSchema, jobFormData } from "@/components/add/JobFormData";
-import JobInput from "@/components/add/JobInput";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import useCurrentJob from "@/hooks/useCurrentJob";
-import EditButtons from "@/components/edit/EditButtons";
-import HeaderEdit from "@/components/header/HeaderEdit";
 import { ClipLoader } from "react-spinners";
+
+//components
+import TextArea from "@/components/add/TextArea";
+import HeaderEdit from "@/components/header/HeaderEdit";
+import EditButtons from "@/components/edit/EditButtons";
+import JobInput from "@/components/add/JobInput";
+import Button from "@/components/Button";
+import DescriptionContainer from "@/components/add/DescriptionContainer";
 
 type createJobDatatype = z.infer<typeof createJobSchema>;
 
@@ -29,6 +32,7 @@ const Edit = () => {
     isLoading,
   } = useCurrentJob(jobId);
   const [editMode, setEditMode] = useState(false);
+  console.log(previousJob);
 
   //create the datatype
   const createJobForm = useForm<createJobDatatype>({
@@ -88,11 +92,10 @@ const Edit = () => {
                 )}
               </div>
               <div className=" hidden flex-1 box-border p-3 sm:block">
-                <TextArea
+                <DescriptionContainer
+                  description={previousJob["jobDescription"]}
+                  resume={previousJob["resume"]}
                   disabled={!editMode}
-                  name="jobDescription"
-                  placeholder="Add your full job description here (optional)"
-                  value={previousJob["jobDescription"]}
                 />
               </div>
             </form>

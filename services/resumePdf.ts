@@ -16,3 +16,9 @@ export const resumeUpload = async (file: File)=>{
     console.log('This resume file must be in PDF format')
   }
 }
+
+export const getResume = async (resumeName: string) => {
+
+  const resume = ref(storage, `resumes/${resumeName}`)
+  console.log(resume)
+}

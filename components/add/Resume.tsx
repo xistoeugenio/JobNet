@@ -1,10 +1,17 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent } from "react";
 import { useFormContext } from "react-hook-form";
 import { ErrorMessage } from "../inputs/ErrorMessage";
 import { toast } from "react-hot-toast";
 
-const Resume = () => {
-  const resume = false;
+import { Viewer, Worker } from "@react-pdf-viewer/core";
+import "@react-pdf-viewer/core/lib/styles/index.css";
+
+
+interface ResumeProps {
+  resume?: string;
+}
+
+const Resume: React.FC<ResumeProps> = ({ resume }) => {
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files instanceof FileList) {
@@ -16,13 +23,16 @@ const Resume = () => {
     }
   };
 
-  
-
   const { register } = useFormContext();
+
   return (
-    <div className="flex-1 flex justify-center items-center">
+    <div className="flex-1 flex justify-center items-center w-full overflow-hidden custom-scrollbar">
       {resume ? (
-        <div>Resume</div>
+        <div className="w-full h-full">
+          <Worker workerUrl="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.7.107/pdf.worker.min.js">
+            <Viewer fileUrl={resume} theme="dark" />
+          </Worker>
+        </div>
       ) : (
         <>
           <input
@@ -37,4 +47,5 @@ const Resume = () => {
     </div>
   );
 };
+
 export default Resume;
