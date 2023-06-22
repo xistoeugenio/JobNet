@@ -1,17 +1,13 @@
 import styles from "./checkbox.module.scss";
 
 interface NavbarProps {
-  setCurrentField: React.Dispatch<React.SetStateAction<string>>;
-  currentField: string;
+  setResumeChecked: React.Dispatch<React.SetStateAction<boolean>>;
+  resumeChecked: boolean;
 }
 
-const Checkbox: React.FC<NavbarProps> = ({ setCurrentField, currentField }) => {
+const Checkbox: React.FC<NavbarProps> = ({ setResumeChecked, resumeChecked }) => {
   const onToggle = () => {
-    if (currentField === "Description") {
-      setCurrentField("Resume");
-    } else {
-      setCurrentField("Description");
-    }
+    setResumeChecked(!resumeChecked);
   };
 
   return (
@@ -26,12 +22,10 @@ const Checkbox: React.FC<NavbarProps> = ({ setCurrentField, currentField }) => {
         <div
           className={styles.switch}
           style={{
-            left: `${
-              currentField === "Description" ? "6px" : "calc(50% - 6px)"
-            }`,
+            left: `${resumeChecked ? "6px" : "calc(50% - 6px)"}`,
           }}
         >
-          {currentField}
+          {resumeChecked ? 'Description': 'Resume'}
         </div>
       </label>
     </div>

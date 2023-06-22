@@ -30,9 +30,9 @@ const Edit = () => {
     data: previousJob,
     mutate: mutateJob,
     isLoading,
-  } = useCurrentJob(jobId);
+    error
+  } = useCurrentJob(jobId || '');
   const [editMode, setEditMode] = useState(false);
-  console.log(previousJob);
 
   //create the datatype
   const createJobForm = useForm<createJobDatatype>({
@@ -57,6 +57,10 @@ const Edit = () => {
   const resetFormInputs = () => {
     createJobForm.reset();
   };
+
+  if(error){
+    return <span className="text-red-600">{error?.message || 'something went wrong'}</span>
+  }
 
   return (
     <div className={style.addContainer}>
