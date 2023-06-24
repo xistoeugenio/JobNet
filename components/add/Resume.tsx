@@ -48,7 +48,7 @@ const Resume: React.FC<ResumeProps> = ({ resume }) => {
             type="file"
             onChange={onChange}
           />
-          <span className="text-neutral-500 text-lg font-bold">
+          <span className="text-neutral-500 text-lg font-bold text-center">
             {fileName || "Please select your resume file"}
           </span>
         </label>

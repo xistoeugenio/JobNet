@@ -65,7 +65,7 @@ export const createJobSchema = z.object({
   jobDescription: z.string().optional(),
   //this just verify if the value of the input is type of file
   resume: z.unknown().refine((value) => {
-    if (value instanceof FileList) {
+    if (value instanceof FileList || value === undefined) {
       return true
     } else {
       return false

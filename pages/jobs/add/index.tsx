@@ -15,11 +15,16 @@ import { resumeUpload } from "@/services/resumePdf";
 import DescriptionContainer from "@/components/add/DescriptionContainer";
 import HeaderEdit from "@/components/header/HeaderEdit";
 import JobInput from "@/components/add/JobInput";
+import { ScaleLoader } from "react-spinners";
+import { useState } from "react";
 
 type createJobDatatype = z.infer<typeof createJobSchema>;
 
 const Add = () => {
+  const [uploading, setUploading] = useState(false);
+
   const router = useRouter();
+
   const createJobForm = useForm<createJobDatatype>({
     resolver: zodResolver(createJobSchema),
   });
@@ -28,19 +33,20 @@ const Add = () => {
   const { mutate: mutateJobs } = useJobs();
   const { data: currentUser } = useCurrentUser();
   async function subTest(credentials: createJobDatatype) {
-
+    setUploading(true);
+    
     if (credentials.resume instanceof File) {
       //this is responsible to upload to firebase
       try {
         const resumeUrl = await resumeUpload(credentials.resume);
-        credentials = {...credentials, resume: resumeUrl }
+        credentials = { ...credentials, resume: resumeUrl };
       } catch (error) {
-        toast.error('Your resume faild')
+        toast.error("Your resume faild");
         console.log(error);
       }
     }
 
-    //This cadd a new job to mongoDb
+    //This add a new job to mongoDb
 
     try {
       await axios.post("/api/jobs", { ...credentials, userId: currentUser.id });
@@ -72,7 +78,16 @@ const Add = () => {
                 options={job.options}
               />
             ))}
-            <Button label="Add" outline submit />
+            {uploading ? (
+              <ScaleLoader
+                color="lightblue"
+                width={10}
+                height={37}
+                margin={3}
+              />
+            ) : (
+              <Button label="Add" outline submit />
+            )}
           </div>
           <div className="hidden flex-1 box-border p-3 sm:block">
             <DescriptionContainer />

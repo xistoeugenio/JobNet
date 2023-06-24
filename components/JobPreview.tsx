@@ -37,7 +37,7 @@ const JobPreview: React.FC<JobPreviewProps> = ({
 
   return (
     <div
-      className="bg-neutral-800 h-10 flex justify-between items-center box-border px-3 m-3 rounded-xl cursor-pointer hover:bg-neutral-900"
+      className="bg-neutral-800 h-10 flex justify-between items-center box-border p-3 my-3 rounded-xl cursor-pointer hover:bg-neutral-900"
       onClick={goToEdit}
     >
       <span className="bg-emerald-900 w-1/3 sm:w-1/4 text-neutral-300 rounded-md px-1 overflow-hidden whitespace-nowrap text-ellipsis text-sm sm:text-base">

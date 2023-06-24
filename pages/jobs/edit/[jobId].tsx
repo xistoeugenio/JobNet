@@ -8,7 +8,7 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import useCurrentJob from "@/hooks/useCurrentJob";
-import { ClipLoader } from "react-spinners";
+import { ClipLoader, ScaleLoader } from "react-spinners";
 
 //components
 import TextArea from "@/components/add/TextArea";
@@ -21,6 +21,9 @@ import DescriptionContainer from "@/components/add/DescriptionContainer";
 type createJobDatatype = z.infer<typeof createJobSchema>;
 
 const Edit = () => {
+  const [uploading, setUploading] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+
   //Get the jobId param
   const router = useRouter();
   const { jobId } = router.query;
@@ -30,9 +33,8 @@ const Edit = () => {
     data: previousJob,
     mutate: mutateJob,
     isLoading,
-    error
-  } = useCurrentJob(jobId || '');
-  const [editMode, setEditMode] = useState(false);
+    error,
+  } = useCurrentJob(jobId || "");
 
   //create the datatype
   const createJobForm = useForm<createJobDatatype>({
@@ -42,6 +44,7 @@ const Edit = () => {
   //submit function
   const { handleSubmit } = createJobForm;
   async function updateJob(credentials: createJobDatatype) {
+    setUploading(true);
     try {
       await axios.put(`/api/jobs/edit?jobId=${jobId}`, credentials);
       toast.success(`'${jobId}' updated succesfully`);
@@ -58,8 +61,12 @@ const Edit = () => {
     createJobForm.reset();
   };
 
-  if(error){
-    return <span className="text-red-600">{error?.message || 'something went wrong'}</span>
+  if (error) {
+    return (
+      <span className="text-red-600">
+        {error?.message || "something went wrong"}
+      </span>
+    );
   }
 
   return (
@@ -87,7 +94,16 @@ const Edit = () => {
                   />
                 ))}
                 {editMode ? (
-                  <Button label="Save" outline submit />
+                  uploading ? (
+                    <ScaleLoader
+                      color="lightblue"
+                      width={10}
+                      height={37}
+                      margin={3}
+                    />
+                  ) : (
+                    <Button label="Add" outline submit />
+                  )
                 ) : (
                   <EditButtons
                     onClick={() => setEditMode(true)}
