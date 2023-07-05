@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from "@mui/material";
 import { BiReset } from "react-icons/bi";
 import GoBackButton from "../Buttons/GoBackButton";

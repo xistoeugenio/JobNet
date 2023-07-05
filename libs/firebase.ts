@@ -2,12 +2,12 @@ import { initializeApp } from 'firebase/app'
 import { getStorage } from 'firebase/storage'
 
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECTID,
-  storageBucket: 'jobnet-def92.appspot.com',
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGINGSENDERID,
-  appId: process.env.REACT_APP_FIREBASE_APPID
+  apiKey: "AIzaSyDXrzx2CczxExUHJAlIgtu3AnUrHnt7Xdo",
+  authDomain: "jobnet-def92.firebaseapp.com",
+  projectId: "jobnet-def92",
+  storageBucket: "jobnet-def92.appspot.com",
+  messagingSenderId: "851991428385",
+  appId: "1:851991428385:web:85657413f660ddbb141260"
 };
 
 const firebaseApp = initializeApp(firebaseConfig)

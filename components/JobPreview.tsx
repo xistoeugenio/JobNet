@@ -1,5 +1,5 @@
 import { formatDistanceToNowStrict } from "date-fns";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { BiLinkExternal } from "react-icons/bi";
 
 interface JobPreviewProps {
@@ -32,7 +32,7 @@ const JobPreview: React.FC<JobPreviewProps> = ({
   const router = useRouter();
 
   const goToEdit = () => {
-    router.push(`/jobs/edit/${jobId}`);
+    router.push(`/jobs/${jobId}/edit`);
   };
 
   return (

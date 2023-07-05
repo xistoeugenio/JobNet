@@ -1,12 +1,18 @@
 import useDeleteModal from "@/hooks/useDeleteModal";
 import Button from "../Button";
+import { ScaleLoader } from "react-spinners";
 
 interface DeleteModal {
   onClickDelete: () => void;
   jobName: string;
+  deleting: boolean;
 }
 
-const DeleteModal: React.FC<DeleteModal> = ({ onClickDelete, jobName }) => {
+const DeleteModal: React.FC<DeleteModal> = ({
+  onClickDelete,
+  jobName,
+  deleting,
+}) => {
   const { onClose, isOpen } = useDeleteModal();
 
   //Close the modal
@@ -27,24 +33,36 @@ const DeleteModal: React.FC<DeleteModal> = ({ onClickDelete, jobName }) => {
         <div className="h-auto border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-black outline-none focus:outline-none">
           <div className="flex items-center justify-between p-6 rounded-t">
             <h3 className="text-2xl font-medium text-white text-center">
-              {`Are you sure you want to delete '${jobName}' application?`}
+              Are you sure you want to delete{" "}
+              <span className="text-cyan-500">{jobName}</span> application?
             </h3>
           </div>
           <div className="w-full flex justify-around p-6">
-            <Button
-              label="Cancel"
-              large
-              outline
-              onClick={handleClose}
-              aditionalStyle={{ color: "cyan", borderColor: "cyan" }}
-            />
-            <Button
-              label="Delete"
-              large
-              outline
-              onClick={onClickDelete}
-              aditionalStyle={{ color: "red", borderColor: "red" }}
-            />
+            {deleting ? (
+              <ScaleLoader
+                color="lightblue"
+                width={10}
+                height={40}
+                margin={3}
+              />
+            ) : (
+              <>
+                <Button
+                  label="Cancel"
+                  large
+                  outline
+                  onClick={handleClose}
+                  aditionalStyle={{ color: "cyan", borderColor: "cyan" }}
+                />
+                <Button
+                  label="Delete"
+                  large
+                  outline
+                  onClick={onClickDelete}
+                  aditionalStyle={{ color: "red", borderColor: "red" }}
+                />
+              </>
+            )}
           </div>
         </div>
       </div>
