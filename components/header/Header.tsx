@@ -26,7 +26,7 @@ const Header = () => {
     `}
     >
         <>
-          <UserButton afterSignOutUrl="/"/>
+          <UserButton afterSignOutUrl="/homepage"/>
           <Button label="Add a job" outline onClick={goToAddPage} />
         </>
      
