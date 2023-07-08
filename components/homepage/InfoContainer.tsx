@@ -9,9 +9,9 @@ const InfoContainer = () => {
         job search process.
       </p>
       <p className="w-[70%] text-neutral-300 lg:text-[20px] hidden md:block my-10 ml-6 ">
-        While we're currently in the early stages of development, we are
+        {`While we're currently in the early stages of development, we are
         constantly working to improve our platform based on user needs and
-        feedback.
+        feedback.`}
       </p>
       <a
         className="ml-6 text-orange-200 hidden md:block"
@@ -19,7 +19,7 @@ const InfoContainer = () => {
         target="_blank"
       >
         <Button variant="outlined" startIcon={<FiGithub />} color="inherit">
-          Creator's Github
+          {`Creator's Github`}
         </Button>
       </a>
     </div>
